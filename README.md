@@ -2,6 +2,7 @@
 Wangjing process management system.
 - [开发日记](doc/devDiary.md)
 - [设计图](design)
+- [架构技术选择](doc/architecture.md)
 
 
 ## 订单状态
