@@ -16,7 +16,9 @@
 原因：目前接触的比较流行的前端框架，上手比其他框架要快
 ```
 ### 后端框架
-- SpringBoot全家桶
+- SpringBoot
+  + 持久化：Spring Data Jpa + mybatis
+  + 交互：Spring MVC
 ```
 ```
 ### 数据库
