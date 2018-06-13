@@ -1,9 +1,9 @@
 package com.wj.controller;
 
-import com.wj.bean.User;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value="/users")
 public class TestController {
-    @RequestMapping(value="/{user}", method= RequestMethod.GET)
+
+    @Value("${manInfo}")
+    private String test;
+
+    @GetMapping("/{user}")
     public Long getUser(@PathVariable Long user) {
         return user+111;
     }
 
-    @RequestMapping(value="/test", method=RequestMethod.GET)
-    public User deleteUser() {
-       return new User();
+    @GetMapping("/test")
+    public String deleteUser() {
+       return test;
     }
 }
