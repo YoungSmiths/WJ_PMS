@@ -6,7 +6,7 @@ package com.youngsmith.dev.constants;
  * @author YoungSmith
  * 18-6-13 下午9:43
  */
-public interface HttpStatusConstants {
+public interface HttpResponseCode {
 
     /**
      * xx消息

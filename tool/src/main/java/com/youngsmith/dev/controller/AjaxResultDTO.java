@@ -7,7 +7,7 @@ package com.youngsmith.dev.controller;
  * 18-6-13 下午9:31
  */
 public class AjaxResultDTO {
-    private String code;
+    private int code;
     private String message;
     private Object data;
 
@@ -20,17 +20,17 @@ public class AjaxResultDTO {
                 '}';
     }
 
-    public AjaxResultDTO(String code, String message, Object data) {
+    public AjaxResultDTO(int code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public AjaxResultDTO setCode(String code) {
+    public AjaxResultDTO setCode(int code) {
         this.code = code;
         return this;
     }
