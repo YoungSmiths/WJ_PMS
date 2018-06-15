@@ -1,4 +1,4 @@
-package com.wj.bean;
+package com.wj.pms.bean;
 
 /**
  * Describe: 异常信息表

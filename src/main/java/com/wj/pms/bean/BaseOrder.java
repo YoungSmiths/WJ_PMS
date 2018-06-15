@@ -1,6 +1,4 @@
-package com.wj.bean;
-
-import java.util.Date;
+package com.wj.pms.bean;
 
 /**
  * Describe: 订单

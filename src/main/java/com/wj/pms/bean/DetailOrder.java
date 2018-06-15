@@ -1,4 +1,4 @@
-package com.wj.bean;
+package com.wj.pms.bean;
 
 import javafx.util.Pair;
 

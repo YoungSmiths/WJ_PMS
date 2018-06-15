@@ -1,12 +1,12 @@
-package com.wj.bean;
+package com.wj.pms.bean;
 
 /**
- * Describe: 扑克
+ * Describe: 纸盒
  *
  * @author YoungSmith
  * 18-6-4 下午10:56
  */
-public class puke {
+public class Hezi {
     /**
      * 主键id
      */
@@ -39,19 +39,19 @@ public class puke {
      */
     private String dealoutSide;
     /**
-     * 啤盒
+     * 开牌
      */
-    private String pihe;
+    private String kaipai;
     /**
-     * 黏盒
+     * 冲牌
      */
-    private String nianhe;
+    private String chongpai;
 
     public Integer getId() {
         return id;
     }
 
-    public puke setId(Integer id) {
+    public Hezi setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -60,7 +60,7 @@ public class puke {
         return name;
     }
 
-    public puke setName(String name) {
+    public Hezi setName(String name) {
         this.name = name;
         return this;
     }
@@ -69,7 +69,7 @@ public class puke {
         return baseOrder;
     }
 
-    public puke setBaseOrder(BaseOrder baseOrder) {
+    public Hezi setBaseOrder(BaseOrder baseOrder) {
         this.baseOrder = baseOrder;
         return this;
     }
@@ -78,7 +78,7 @@ public class puke {
         return banfang;
     }
 
-    public puke setBanfang(String banfang) {
+    public Hezi setBanfang(String banfang) {
         this.banfang = banfang;
         return this;
     }
@@ -87,7 +87,7 @@ public class puke {
         return kaizhi;
     }
 
-    public puke setKaizhi(String kaizhi) {
+    public Hezi setKaizhi(String kaizhi) {
         this.kaizhi = kaizhi;
         return this;
     }
@@ -96,7 +96,7 @@ public class puke {
         return yinshua;
     }
 
-    public puke setYinshua(String yinshua) {
+    public Hezi setYinshua(String yinshua) {
         this.yinshua = yinshua;
         return this;
     }
@@ -105,26 +105,26 @@ public class puke {
         return dealoutSide;
     }
 
-    public puke setDealoutSide(String dealoutSide) {
+    public Hezi setDealoutSide(String dealoutSide) {
         this.dealoutSide = dealoutSide;
         return this;
     }
 
-    public String getPihe() {
-        return pihe;
+    public String getKaipai() {
+        return kaipai;
     }
 
-    public puke setPihe(String pihe) {
-        this.pihe = pihe;
+    public Hezi setKaipai(String kaipai) {
+        this.kaipai = kaipai;
         return this;
     }
 
-    public String getNianhe() {
-        return nianhe;
+    public String getChongpai() {
+        return chongpai;
     }
 
-    public puke setNianhe(String nianhe) {
-        this.nianhe = nianhe;
+    public Hezi setChongpai(String chongpai) {
+        this.chongpai = chongpai;
         return this;
     }
 }
