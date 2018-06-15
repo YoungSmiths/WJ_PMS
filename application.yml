@@ -1,0 +1,15 @@
+server:
+  port: 8090
+  session-timeout: 30
+  tomcat.max-threads: 0
+  tomcat.uri-encoding: UTF-8
+
+spring:
+  datasource:
+    url : jdbc:mysql://localhost:3306/wjpms
+    username : root
+    password : root
+    driverClassName : com.mysql.jdbc.Driver
+age: 18
+name: jason
+manInfo: "age:${age},name:${name}"
