@@ -38,7 +38,7 @@ public class BaseOrder extends CommonBean{
     /**
      * 表面处理
      */
-    private String dealOutSide;
+    pchongshurivate String dealOutSide;
     /**
      * 包装要求
      */

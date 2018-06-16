@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wj.pms.common.mapper.BaseOrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.wj.pms.common.model.BaseOrders" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="contract" property="contract" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="paperType" property="papertype" jdbcType="VARCHAR" />
+    <result column="width" property="width" jdbcType="VARCHAR" />
+    <result column="lengths" property="lengths" jdbcType="VARCHAR" />
+    <result column="print_require" property="printRequire" jdbcType="VARCHAR" />
+    <result column="out_side_hander" property="outSideHander" jdbcType="VARCHAR" />
+    <result column="package_require" property="packageRequire" jdbcType="VARCHAR" />
+    <result column="parts" property="parts" jdbcType="VARCHAR" />
+    <result column="describe_info" property="describeInfo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="date_updated" property="dateUpdated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, code, contract, count, paperType, width, lengths, print_require, out_side_hander, 
+    package_require, parts, describe_info, status, create_by, date_created, update_by, 
+    date_updated
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wj.pms.common.model.BaseOrdersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from pms_base_orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pms_base_orders
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pms_base_orders
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wj.pms.common.model.BaseOrdersExample" >
+    delete from pms_base_orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wj.pms.common.model.BaseOrders" >
+    insert into pms_base_orders (id, name, code, 
+      contract, count, paperType, 
+      width, lengths, print_require, 
+      out_side_hander, package_require, parts, 
+      describe_info, status, create_by, 
+      date_created, update_by, date_updated
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{contract,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{papertype,jdbcType=VARCHAR}, 
+      #{width,jdbcType=VARCHAR}, #{lengths,jdbcType=VARCHAR}, #{printRequire,jdbcType=VARCHAR}, 
+      #{outSideHander,jdbcType=VARCHAR}, #{packageRequire,jdbcType=VARCHAR}, #{parts,jdbcType=VARCHAR}, 
+      #{describeInfo,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{dateCreated,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{dateUpdated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wj.pms.common.model.BaseOrders" >
+    insert into pms_base_orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="contract != null" >
+        contract,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="papertype != null" >
+        paperType,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="lengths != null" >
+        lengths,
+      </if>
+      <if test="printRequire != null" >
+        print_require,
+      </if>
+      <if test="outSideHander != null" >
+        out_side_hander,
+      </if>
+      <if test="packageRequire != null" >
+        package_require,
+      </if>
+      <if test="parts != null" >
+        parts,
+      </if>
+      <if test="describeInfo != null" >
+        describe_info,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="dateCreated != null" >
+        date_created,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="dateUpdated != null" >
+        date_updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="contract != null" >
+        #{contract,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="papertype != null" >
+        #{papertype,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=VARCHAR},
+      </if>
+      <if test="lengths != null" >
+        #{lengths,jdbcType=VARCHAR},
+      </if>
+      <if test="printRequire != null" >
+        #{printRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="outSideHander != null" >
+        #{outSideHander,jdbcType=VARCHAR},
+      </if>
+      <if test="packageRequire != null" >
+        #{packageRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="parts != null" >
+        #{parts,jdbcType=VARCHAR},
+      </if>
+      <if test="describeInfo != null" >
+        #{describeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="dateCreated != null" >
+        #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="dateUpdated != null" >
+        #{dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wj.pms.common.model.BaseOrdersExample" resultType="java.lang.Integer" >
+    select count(*) from pms_base_orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pms_base_orders
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contract != null" >
+        contract = #{record.contract,jdbcType=VARCHAR},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.papertype != null" >
+        paperType = #{record.papertype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.width != null" >
+        width = #{record.width,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lengths != null" >
+        lengths = #{record.lengths,jdbcType=VARCHAR},
+      </if>
+      <if test="record.printRequire != null" >
+        print_require = #{record.printRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outSideHander != null" >
+        out_side_hander = #{record.outSideHander,jdbcType=VARCHAR},
+      </if>
+      <if test="record.packageRequire != null" >
+        package_require = #{record.packageRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parts != null" >
+        parts = #{record.parts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.describeInfo != null" >
+        describe_info = #{record.describeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null" >
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateCreated != null" >
+        date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null" >
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateUpdated != null" >
+        date_updated = #{record.dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pms_base_orders
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      contract = #{record.contract,jdbcType=VARCHAR},
+      count = #{record.count,jdbcType=INTEGER},
+      paperType = #{record.papertype,jdbcType=VARCHAR},
+      width = #{record.width,jdbcType=VARCHAR},
+      lengths = #{record.lengths,jdbcType=VARCHAR},
+      print_require = #{record.printRequire,jdbcType=VARCHAR},
+      out_side_hander = #{record.outSideHander,jdbcType=VARCHAR},
+      package_require = #{record.packageRequire,jdbcType=VARCHAR},
+      parts = #{record.parts,jdbcType=VARCHAR},
+      describe_info = #{record.describeInfo,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      date_created = #{record.dateCreated,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      date_updated = #{record.dateUpdated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wj.pms.common.model.BaseOrders" >
+    update pms_base_orders
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="contract != null" >
+        contract = #{contract,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="papertype != null" >
+        paperType = #{papertype,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=VARCHAR},
+      </if>
+      <if test="lengths != null" >
+        lengths = #{lengths,jdbcType=VARCHAR},
+      </if>
+      <if test="printRequire != null" >
+        print_require = #{printRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="outSideHander != null" >
+        out_side_hander = #{outSideHander,jdbcType=VARCHAR},
+      </if>
+      <if test="packageRequire != null" >
+        package_require = #{packageRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="parts != null" >
+        parts = #{parts,jdbcType=VARCHAR},
+      </if>
+      <if test="describeInfo != null" >
+        describe_info = #{describeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="dateCreated != null" >
+        date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="dateUpdated != null" >
+        date_updated = #{dateUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wj.pms.common.model.BaseOrders" >
+    update pms_base_orders
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      contract = #{contract,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER},
+      paperType = #{papertype,jdbcType=VARCHAR},
+      width = #{width,jdbcType=VARCHAR},
+      lengths = #{lengths,jdbcType=VARCHAR},
+      print_require = #{printRequire,jdbcType=VARCHAR},
+      out_side_hander = #{outSideHander,jdbcType=VARCHAR},
+      package_require = #{packageRequire,jdbcType=VARCHAR},
+      parts = #{parts,jdbcType=VARCHAR},
+      describe_info = #{describeInfo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      date_created = #{dateCreated,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      date_updated = #{dateUpdated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
