@@ -1,10 +1,10 @@
 server:
-  port: 8080
+  port: 1111
 
 spring:
     datasource:
         name: test
-        url: jdbc:mysql://127.0.0.1:3306/wjpms
+        url: jdbc:mysql://127.0.0.1:3306/wjpms?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
         username: root
         password: root
         # 使用druid数据源
@@ -27,7 +27,7 @@ mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.winter.model
 
-#pagehelper分页插件
+#pagehelper
 pagehelper:
     helperDialect: mysql
     reasonable: true
