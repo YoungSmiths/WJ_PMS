@@ -1,9 +1,6 @@
 log/
 .gradle
 .idea
-gradlew
-gradle
-gradlew.bat
 build
 out
 mvnw
