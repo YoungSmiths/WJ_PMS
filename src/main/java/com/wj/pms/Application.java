@@ -1,6 +1,6 @@
 package com.wj.pms;
 
-import com.wj.pms.common.PhantomJsUtil;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadFactory;
 @SpringBootApplication
 @EnableScheduling
 @EnableAsync
+@MapperScan("com.wj.pms.mybatis.mapper")
 public class Application implements SchedulingConfigurer {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
@@ -27,7 +28,8 @@ public class Application implements SchedulingConfigurer {
     }
 
     @Override
-    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {        taskRegistrar.setScheduler(taskExecutor());
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setScheduler(taskExecutor());
     }
 
     @Bean(destroyMethod = "shutdown")
@@ -44,7 +46,6 @@ public class Application implements SchedulingConfigurer {
 
     @PreDestroy
     public void destory() {
-        PhantomJsUtil.quit();
         logger.info("Phantomjs Driver quit!");
     }
 }

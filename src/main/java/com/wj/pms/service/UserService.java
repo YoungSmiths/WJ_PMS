@@ -1,8 +1,9 @@
 package com.wj.pms.service;
 
 import com.wj.pms.common.exception.PmsException;
-import com.wj.pms.common.model.User;
-import com.wj.pms.dao.UserDao;
+import com.wj.pms.mybatis.entity.User;
+import com.wj.pms.mybatis.mapper.UserMapper;
+import com.wj.pms.mybatis.mapper.self.PmsDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by YoungSmith on 2018/7/22.
+ * Created by shiy on 2017/7/22.
  */
 @Service
 public class UserService implements UserDetailsService {
@@ -31,10 +31,10 @@ public class UserService implements UserDetailsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Autowired
-    private UserOperationRecordService uors;
+    private PmsDao pmsDao;
 
     public User getAdminUser() {
         User admin = getUserByName("admin");
@@ -46,11 +46,16 @@ public class UserService implements UserDetailsService {
                     admin.setName("admin");
                     admin.setPassword("admin");
                     admin.setDisplayName("Administrator");
-                    admin = userDao.save(admin);
+                    admin.setMobile("13718450920");
+                    admin.setQq("1347908776");
+                    admin.setDisplayName("石洋");
+                    admin.setState("1");
+                    admin.setWeChat("13718450920");
+                    userMapper.insert(admin);
                 }
             }
         }
-        return admin;
+        return pmsDao.selectUserByName("admin");
     }
 
     public User registerUser(User user) throws PmsException {
@@ -58,15 +63,14 @@ public class UserService implements UserDetailsService {
             throw new PmsException(1002, "user has existed");
         }
         user.setPassword(user.getPassword());
-        return userDao.save(user);
+        userMapper.insert(user);
+        return pmsDao.selectUserByName(user.getName());
     }
 
     public boolean isUserExisted(String userName) {
         try {
-            List<User> userList = userDao.findUser(userName);
-            if (userList == null || userList.isEmpty())
-                return false;
-            return true;
+            User user = pmsDao.selectUserByName(userName);
+            return user != null;
         } catch (Exception e) {
             LOGGER.error("Service: isUserExisted({}) error {}", userName, e);
             return false;
@@ -74,8 +78,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User getUserByName(String userName) {
-        List<User> userList = userDao.findUser(userName);
-        return userList.size() > 0 ? userList.get(0) : null;
+        return pmsDao.selectUserByName(userName);
     }
 
     @Override

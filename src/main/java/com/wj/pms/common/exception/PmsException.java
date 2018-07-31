@@ -3,8 +3,8 @@ package com.wj.pms.common.exception;
 /**
  * @ClassName: PmsException
  * @Description: TODO Service层处理各类异常
- * @author YoungSmith
- * @date 2018年3月4日 上午9:13:19
+ * @author shiy
+ * @date 2017年3月4日 上午9:13:19
  */
 public class PmsException extends Exception {
 

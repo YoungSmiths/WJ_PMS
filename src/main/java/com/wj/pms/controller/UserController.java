@@ -1,10 +1,8 @@
 package com.wj.pms.controller;
 
 import com.wj.pms.common.exception.PmsException;
-import com.wj.pms.common.model.User;
-import com.wj.pms.common.utils.Result;
-import com.wj.pms.common.LogUtil;
-import com.wj.pms.service.UserOperationRecordService;
+import com.wj.pms.common.Result;
+import com.wj.pms.mybatis.entity.User;
 import com.wj.pms.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -29,9 +26,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserOperationRecordService uors;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -64,7 +58,10 @@ public class UserController {
     public Result currentUser(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            return Result.success(new User().setId(user.getId()).setName(user.getName()));
+            User user1 = new User();
+            user1.setId(user.getId());
+            user1.setName(user.getName());
+            return Result.success(user1);
         } else {
             return Result.success(null);
         }
@@ -75,8 +72,10 @@ public class UserController {
     public Result signIn(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            User data = new User().setId(user.getId()).setName(user.getName());
-            return Result.success(data);
+            User user1 = new User();
+            user1.setId(user.getId());
+            user1.setName(user.getName());
+            return Result.success(user1);
         } else {
             session.setAttribute("user", new User());
             return Result.fail("Please login first.");
@@ -99,17 +98,18 @@ public class UserController {
         token.setDetails(new WebAuthenticationDetails(request));
         Authentication auth = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
-
-        User data = new User().setId(enUser.getId()).setName(enUser.getName());
-        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登录：" + user.getName(), "", "", session);
-        return Result.success(data);
+        User user1 = new User();
+        user1.setId(enUser.getId());
+        user1.setName(enUser.getName());
+//        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登录：" + user.getName(), "", "", session);
+        return Result.success(user1);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public Result signOut(@RequestBody Map<String, Object> jsonObject, HttpSession session, HttpServletResponse response) {
         User user = (User) session.getAttribute("user");
         session.removeAttribute("user");
-        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登出：" + user.getName(), "", "", session);
+//        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登出：" + user.getName(), "", "", session);
         return Result.buildResponse(response, null, 0, "logout success", null);
     }
 }
