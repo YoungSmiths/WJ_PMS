@@ -3,11 +3,11 @@ package com.wj.pms.mybatis.entity;
 import java.util.Date;
 
 public class UserRole {
-    private Integer id;
+    private String id;
 
-    private Integer userId;
+    private String userId;
 
-    private Integer roleId;
+    private String roleId;
 
     private String createBy;
 
@@ -17,28 +17,28 @@ public class UserRole {
 
     private Date updateTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
-    public Integer getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId == null ? null : roleId.trim();
     }
 
     public String getCreateBy() {

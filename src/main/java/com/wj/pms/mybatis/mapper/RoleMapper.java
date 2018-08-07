@@ -14,31 +14,31 @@ import org.apache.ibatis.type.JdbcType;
 public interface RoleMapper {
     @Delete({
         "delete from role",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     @Insert({
         "insert into role (id, role_code, ",
         "role_name, state, ",
         "create_by, create_time, ",
         "update_by, update_time)",
-        "values (#{id,jdbcType=INTEGER}, #{roleCode,jdbcType=VARCHAR}, ",
+        "values (#{id,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, ",
         "#{roleName,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, ",
         "#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})"
     })
-    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=Integer.class)
+    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=String.class)
     int insert(Role record);
 
     @Select({
         "select",
         "id, role_code, role_name, state, create_by, create_time, update_by, update_time",
         "from role",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="role_code", property="roleCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="role_name", property="roleName", jdbcType=JdbcType.VARCHAR),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
@@ -47,7 +47,7 @@ public interface RoleMapper {
         @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    Role selectByPrimaryKey(Integer id);
+    Role selectByPrimaryKey(String id);
 
     @Select({
         "select",
@@ -55,7 +55,7 @@ public interface RoleMapper {
         "from role"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="role_code", property="roleCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="role_name", property="roleName", jdbcType=JdbcType.VARCHAR),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
@@ -75,7 +75,7 @@ public interface RoleMapper {
           "create_time = #{createTime,jdbcType=TIMESTAMP},",
           "update_by = #{updateBy,jdbcType=VARCHAR},",
           "update_time = #{updateTime,jdbcType=TIMESTAMP}",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(Role record);
 }

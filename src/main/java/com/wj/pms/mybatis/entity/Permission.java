@@ -3,7 +3,7 @@ package com.wj.pms.mybatis.entity;
 import java.util.Date;
 
 public class Permission {
-    private Integer id;
+    private String id;
 
     private String permissionName;
 
@@ -23,12 +23,12 @@ public class Permission {
 
     private Date updateTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getPermissionName() {

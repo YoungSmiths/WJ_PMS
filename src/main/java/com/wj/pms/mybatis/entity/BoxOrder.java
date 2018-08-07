@@ -3,13 +3,13 @@ package com.wj.pms.mybatis.entity;
 import java.util.Date;
 
 public class BoxOrder {
-    private Integer id;
+    private String id;
 
     private String boxOrderName;
 
     private String boxOrderCode;
 
-    private Integer parentOrderId;
+    private String parentOrderId;
 
     private String versionHouse;
 
@@ -35,12 +35,12 @@ public class BoxOrder {
 
     private Date updateTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getBoxOrderName() {
@@ -59,12 +59,12 @@ public class BoxOrder {
         this.boxOrderCode = boxOrderCode == null ? null : boxOrderCode.trim();
     }
 
-    public Integer getParentOrderId() {
+    public String getParentOrderId() {
         return parentOrderId;
     }
 
-    public void setParentOrderId(Integer parentOrderId) {
-        this.parentOrderId = parentOrderId;
+    public void setParentOrderId(String parentOrderId) {
+        this.parentOrderId = parentOrderId == null ? null : parentOrderId.trim();
     }
 
     public String getVersionHouse() {

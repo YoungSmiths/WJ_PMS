@@ -23,7 +23,7 @@ public class OrdersController {
 
     @PostMapping
     @ResponseBody
-    public Result insertOrUpdate(@RequestParam Orders orders) {
+    public Result insertOrUpdate(@RequestBody Orders orders) {
         if(Objects.isNull(orders.getId())){
             ordersMapper.insert(orders);
         }else{
@@ -34,7 +34,7 @@ public class OrdersController {
 
     @DeleteMapping("/{id}")
     @ResponseBody
-    public Result delete(@PathVariable Integer id){
+    public Result delete(@PathVariable String id){
         if(Objects.nonNull(ordersMapper.selectByPrimaryKey(id)))
             ordersMapper.deleteByPrimaryKey(id);
         return Result.success();
@@ -42,7 +42,7 @@ public class OrdersController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Result select(@PathVariable Integer id){
+    public Result select(@PathVariable String id){
         return Result.success(ordersMapper.selectByPrimaryKey(id));
     }
 

@@ -14,9 +14,9 @@ import org.apache.ibatis.type.JdbcType;
 public interface PermissionMapper {
     @Delete({
         "delete from permission",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     @Insert({
         "insert into permission (id, permission_name, ",
@@ -24,13 +24,13 @@ public interface PermissionMapper {
         "describe_info, state, ",
         "create_by, create_time, ",
         "update_by, update_time)",
-        "values (#{id,jdbcType=INTEGER}, #{permissionName,jdbcType=VARCHAR}, ",
+        "values (#{id,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, ",
         "#{permissionCode,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, ",
         "#{describeInfo,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, ",
         "#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})"
     })
-    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=Integer.class)
+    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=String.class)
     int insert(Permission record);
 
     @Select({
@@ -38,10 +38,10 @@ public interface PermissionMapper {
         "id, permission_name, permission_code, content, describe_info, state, create_by, ",
         "create_time, update_by, update_time",
         "from permission",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="permission_name", property="permissionName", jdbcType=JdbcType.VARCHAR),
         @Result(column="permission_code", property="permissionCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="content", property="content", jdbcType=JdbcType.VARCHAR),
@@ -52,7 +52,7 @@ public interface PermissionMapper {
         @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    Permission selectByPrimaryKey(Integer id);
+    Permission selectByPrimaryKey(String id);
 
     @Select({
         "select",
@@ -61,7 +61,7 @@ public interface PermissionMapper {
         "from permission"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="permission_name", property="permissionName", jdbcType=JdbcType.VARCHAR),
         @Result(column="permission_code", property="permissionCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="content", property="content", jdbcType=JdbcType.VARCHAR),
@@ -85,7 +85,7 @@ public interface PermissionMapper {
           "create_time = #{createTime,jdbcType=TIMESTAMP},",
           "update_by = #{updateBy,jdbcType=VARCHAR},",
           "update_time = #{updateTime,jdbcType=TIMESTAMP}",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(Permission record);
 }

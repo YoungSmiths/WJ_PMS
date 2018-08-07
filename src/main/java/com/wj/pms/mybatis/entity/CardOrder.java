@@ -3,13 +3,13 @@ package com.wj.pms.mybatis.entity;
 import java.util.Date;
 
 public class CardOrder {
-    private Integer id;
+    private String id;
 
     private String cardOrderName;
 
     private String code;
 
-    private Integer parentOrderId;
+    private String parentOrderId;
 
     private String versionHouse;
 
@@ -25,7 +25,7 @@ public class CardOrder {
 
     private String describeInfo;
 
-    private String status;
+    private String state;
 
     private String createBy;
 
@@ -35,12 +35,12 @@ public class CardOrder {
 
     private Date updateTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
     public String getCardOrderName() {
@@ -59,12 +59,12 @@ public class CardOrder {
         this.code = code == null ? null : code.trim();
     }
 
-    public Integer getParentOrderId() {
+    public String getParentOrderId() {
         return parentOrderId;
     }
 
-    public void setParentOrderId(Integer parentOrderId) {
-        this.parentOrderId = parentOrderId;
+    public void setParentOrderId(String parentOrderId) {
+        this.parentOrderId = parentOrderId == null ? null : parentOrderId.trim();
     }
 
     public String getVersionHouse() {
@@ -123,12 +123,12 @@ public class CardOrder {
         this.describeInfo = describeInfo == null ? null : describeInfo.trim();
     }
 
-    public String getStatus() {
-        return status;
+    public String getState() {
+        return state;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
     }
 
     public String getCreateBy() {

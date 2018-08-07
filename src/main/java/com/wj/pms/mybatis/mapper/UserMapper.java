@@ -14,9 +14,9 @@ import org.apache.ibatis.type.JdbcType;
 public interface UserMapper {
     @Delete({
         "delete from user",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     @Insert({
         "insert into user (id, name, ",
@@ -27,7 +27,7 @@ public interface UserMapper {
         "secret, mail, state, ",
         "create_by, create_time, ",
         "update_by, update_time)",
-        "values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
+        "values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, ",
         "#{displayName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, ",
         "#{password,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, ",
         "#{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, ",
@@ -36,7 +36,7 @@ public interface UserMapper {
         "#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})"
     })
-    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=Integer.class)
+    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=String.class)
     int insert(User record);
 
     @Select({
@@ -44,10 +44,10 @@ public interface UserMapper {
         "id, name, display_name, id_no, password, birthday, sex, phone, mobile, qq, we_chat, ",
         "department_id, secret, mail, state, create_by, create_time, update_by, update_time",
         "from user",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="display_name", property="displayName", jdbcType=JdbcType.VARCHAR),
         @Result(column="id_no", property="idNo", jdbcType=JdbcType.VARCHAR),
@@ -67,7 +67,7 @@ public interface UserMapper {
         @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    User selectByPrimaryKey(Integer id);
+    User selectByPrimaryKey(String id);
 
     @Select({
         "select",
@@ -76,7 +76,7 @@ public interface UserMapper {
         "from user"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
         @Result(column="display_name", property="displayName", jdbcType=JdbcType.VARCHAR),
         @Result(column="id_no", property="idNo", jdbcType=JdbcType.VARCHAR),
@@ -118,7 +118,7 @@ public interface UserMapper {
           "create_time = #{createTime,jdbcType=TIMESTAMP},",
           "update_by = #{updateBy,jdbcType=VARCHAR},",
           "update_time = #{updateTime,jdbcType=TIMESTAMP}",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(User record);
 }

@@ -26,7 +26,7 @@ public class OrderStateRouterController {
 
     @PostMapping
     @ResponseBody
-    public Result insertOrUpdate(@RequestParam OrderStateRouter router){
+    public Result insertOrUpdate(@RequestBody OrderStateRouter router){
         if(StringUtils.isEmpty(router.getId())){
             orderStateRouterMapper.insert(router);
         } else {
@@ -35,9 +35,9 @@ public class OrderStateRouterController {
         return Result.success();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     @ResponseBody
-    public Result delete(@PathVariable Integer id){
+    public Result delete(@PathVariable String id){
         orderStateRouterMapper.deleteByPrimaryKey(id);
         return Result.success();
     }

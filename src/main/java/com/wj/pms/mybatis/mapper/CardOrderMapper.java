@@ -14,9 +14,9 @@ import org.apache.ibatis.type.JdbcType;
 public interface CardOrderMapper {
     @Delete({
         "delete from card_order",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     @Insert({
         "insert into card_order (id, card_order_name, ",
@@ -24,34 +24,34 @@ public interface CardOrderMapper {
         "version_house, open_paper, ",
         "print, out_side_hander, ",
         "open_card, blunt_card, ",
-        "describe_info, status, ",
+        "describe_info, state, ",
         "create_by, create_time, ",
         "update_by, update_time)",
-        "values (#{id,jdbcType=INTEGER}, #{cardOrderName,jdbcType=VARCHAR}, ",
-        "#{code,jdbcType=VARCHAR}, #{parentOrderId,jdbcType=INTEGER}, ",
+        "values (#{id,jdbcType=VARCHAR}, #{cardOrderName,jdbcType=VARCHAR}, ",
+        "#{code,jdbcType=VARCHAR}, #{parentOrderId,jdbcType=VARCHAR}, ",
         "#{versionHouse,jdbcType=VARCHAR}, #{openPaper,jdbcType=VARCHAR}, ",
         "#{print,jdbcType=VARCHAR}, #{outSideHander,jdbcType=VARCHAR}, ",
         "#{openCard,jdbcType=VARCHAR}, #{bluntCard,jdbcType=VARCHAR}, ",
-        "#{describeInfo,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, ",
+        "#{describeInfo,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, ",
         "#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})"
     })
-    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=Integer.class)
+    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=String.class)
     int insert(CardOrder record);
 
     @Select({
         "select",
         "id, card_order_name, code, parent_order_id, version_house, open_paper, print, ",
-        "out_side_hander, open_card, blunt_card, describe_info, status, create_by, create_time, ",
+        "out_side_hander, open_card, blunt_card, describe_info, state, create_by, create_time, ",
         "update_by, update_time",
         "from card_order",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="card_order_name", property="cardOrderName", jdbcType=JdbcType.VARCHAR),
         @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
-        @Result(column="parent_order_id", property="parentOrderId", jdbcType=JdbcType.INTEGER),
+        @Result(column="parent_order_id", property="parentOrderId", jdbcType=JdbcType.VARCHAR),
         @Result(column="version_house", property="versionHouse", jdbcType=JdbcType.VARCHAR),
         @Result(column="open_paper", property="openPaper", jdbcType=JdbcType.VARCHAR),
         @Result(column="print", property="print", jdbcType=JdbcType.VARCHAR),
@@ -59,26 +59,26 @@ public interface CardOrderMapper {
         @Result(column="open_card", property="openCard", jdbcType=JdbcType.VARCHAR),
         @Result(column="blunt_card", property="bluntCard", jdbcType=JdbcType.VARCHAR),
         @Result(column="describe_info", property="describeInfo", jdbcType=JdbcType.VARCHAR),
-        @Result(column="status", property="status", jdbcType=JdbcType.VARCHAR),
+        @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_by", property="createBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    CardOrder selectByPrimaryKey(Integer id);
+    CardOrder selectByPrimaryKey(String id);
 
     @Select({
         "select",
         "id, card_order_name, code, parent_order_id, version_house, open_paper, print, ",
-        "out_side_hander, open_card, blunt_card, describe_info, status, create_by, create_time, ",
+        "out_side_hander, open_card, blunt_card, describe_info, state, create_by, create_time, ",
         "update_by, update_time",
         "from card_order"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="card_order_name", property="cardOrderName", jdbcType=JdbcType.VARCHAR),
         @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
-        @Result(column="parent_order_id", property="parentOrderId", jdbcType=JdbcType.INTEGER),
+        @Result(column="parent_order_id", property="parentOrderId", jdbcType=JdbcType.VARCHAR),
         @Result(column="version_house", property="versionHouse", jdbcType=JdbcType.VARCHAR),
         @Result(column="open_paper", property="openPaper", jdbcType=JdbcType.VARCHAR),
         @Result(column="print", property="print", jdbcType=JdbcType.VARCHAR),
@@ -86,7 +86,7 @@ public interface CardOrderMapper {
         @Result(column="open_card", property="openCard", jdbcType=JdbcType.VARCHAR),
         @Result(column="blunt_card", property="bluntCard", jdbcType=JdbcType.VARCHAR),
         @Result(column="describe_info", property="describeInfo", jdbcType=JdbcType.VARCHAR),
-        @Result(column="status", property="status", jdbcType=JdbcType.VARCHAR),
+        @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_by", property="createBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
@@ -98,7 +98,7 @@ public interface CardOrderMapper {
         "update card_order",
         "set card_order_name = #{cardOrderName,jdbcType=VARCHAR},",
           "code = #{code,jdbcType=VARCHAR},",
-          "parent_order_id = #{parentOrderId,jdbcType=INTEGER},",
+          "parent_order_id = #{parentOrderId,jdbcType=VARCHAR},",
           "version_house = #{versionHouse,jdbcType=VARCHAR},",
           "open_paper = #{openPaper,jdbcType=VARCHAR},",
           "print = #{print,jdbcType=VARCHAR},",
@@ -106,12 +106,12 @@ public interface CardOrderMapper {
           "open_card = #{openCard,jdbcType=VARCHAR},",
           "blunt_card = #{bluntCard,jdbcType=VARCHAR},",
           "describe_info = #{describeInfo,jdbcType=VARCHAR},",
-          "status = #{status,jdbcType=VARCHAR},",
+          "state = #{state,jdbcType=VARCHAR},",
           "create_by = #{createBy,jdbcType=VARCHAR},",
           "create_time = #{createTime,jdbcType=TIMESTAMP},",
           "update_by = #{updateBy,jdbcType=VARCHAR},",
           "update_time = #{updateTime,jdbcType=TIMESTAMP}",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(CardOrder record);
 }

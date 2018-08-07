@@ -1,6 +1,6 @@
 CREATE TABLE  user
 (
-  id                INTEGER NOT NULL PRIMARY KEY,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
   name              VARCHAR(255) NOT NULL  UNIQUE,
   display_name      VARCHAR(255),
   id_no             VARCHAR(50) UNIQUE,
@@ -24,7 +24,7 @@ CREATE TABLE  user
 
 CREATE TABLE department
 (
-  id                INTEGER NOT NULL PRIMARY KEY,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
   department_name   VARCHAR(255),
   department_code   VARCHAR(50),
   state             VARCHAR(1),
@@ -36,8 +36,8 @@ CREATE TABLE department
 
 CREATE TABLE  role
 (
-  id                INTEGER NOT NULL PRIMARY KEY,
-  role_code           VARCHAR(50) UNIQUE,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  role_code         VARCHAR(50) UNIQUE,
   role_name         VARCHAR(50) UNIQUE,
   state             VARCHAR(1),
   create_by         VARCHAR(255),
@@ -47,9 +47,9 @@ CREATE TABLE  role
 );
 
 CREATE TABLE user_role(
-  id                INTEGER NOT NULL PRIMARY KEY,
-  user_id           INTEGER NOT NULL,
-  role_id           INTEGER NOT NULL,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  user_id           VARCHAR(50) NOT NULL,
+  role_id           VARCHAR(50) NOT NULL,
   create_by         VARCHAR(255),
   create_time       DATETIME,
   update_by         VARCHAR(255),
@@ -58,7 +58,7 @@ CREATE TABLE user_role(
 
 CREATE TABLE permission
 (
-  id                INTEGER NOT NULL PRIMARY KEY,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
   permission_name   VARCHAR(255) UNIQUE,
   permission_code   VARCHAR(50) UNIQUE,
   content           VARCHAR(500),
@@ -72,9 +72,9 @@ CREATE TABLE permission
 
 CREATE TABLE role_permission
 (
-  id                INTEGER NOT NULL PRIMARY KEY,
-  role_id           INTEGER NOT NULL,
-  permission_id     INTEGER NOT NULL,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  role_id           VARCHAR(50) NOT NULL,
+  permission_id     VARCHAR(50) NOT NULL,
   state             VARCHAR(1),
   create_by         VARCHAR(255),
   create_time       DATETIME,
@@ -84,10 +84,10 @@ CREATE TABLE role_permission
 
 CREATE TABLE exception
 (
-  id                INTEGER NOT NULL PRIMARY KEY,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
   exception_code    VARCHAR(50),
   message           VARCHAR(255),
-  order_id          VARCHAR(255),
+  order_id          VARCHAR(50),
   employee_id       VARCHAR(50),
   create_by         VARCHAR(255),
   create_time       DATETIME,
@@ -98,12 +98,12 @@ CREATE TABLE exception
 
 CREATE TABLE orders
 (
-  id                INTEGER NOT NULL PRIMARY KEY,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
   order_name        VARCHAR(255),
   order_code        VARCHAR(50),
   contract_no       VARCHAR(255),
   count             VARCHAR(255),
-  paperType         VARCHAR(255),
+  paper_type        VARCHAR(255),
   width             VARCHAR(255),
   lengths           VARCHAR(255),
   print_require     VARCHAR(2000),
@@ -113,7 +113,7 @@ CREATE TABLE orders
   design_pic_path   VARCHAR(2000),
   sub_order_info    VARCHAR(2000),
   describe_info     VARCHAR(2000),
-  status            VARCHAR(1),
+  state             VARCHAR(1),
   create_by         VARCHAR(255),
   create_time       DATETIME,
   update_by         VARCHAR(255),
@@ -122,10 +122,10 @@ CREATE TABLE orders
 
 CREATE TABLE box_order
 (
-  id                INTEGER PRIMARY KEY,
+  id                VARCHAR(50) PRIMARY KEY,
   box_order_name    VARCHAR(255),
   box_order_code    VARCHAR(50),
-  parent_order_id   INTEGER NOT NULL ,
+  parent_order_id   VARCHAR(50) NOT NULL ,
   version_house     VARCHAR(500),
   open_paper        VARCHAR(500),
   print             VARCHAR(500),
@@ -142,10 +142,10 @@ CREATE TABLE box_order
 
 CREATE TABLE card_order
 (
-  id                INTEGER PRIMARY KEY ,
+  id                VARCHAR(50) PRIMARY KEY ,
   card_order_name   VARCHAR(255) NOT NULL UNIQUE ,
   code              VARCHAR(50) NOT NULL UNIQUE ,
-  parent_order_id   INTEGER NOT NULL ,
+  parent_order_id   VARCHAR(50) NOT NULL ,
   version_house     VARCHAR(500),
   open_paper        VARCHAR(500),
   print             VARCHAR(500),
@@ -153,7 +153,7 @@ CREATE TABLE card_order
   open_card         VARCHAR(500),
   blunt_card        VARCHAR(500),
   describe_info     VARCHAR(200),
-  status            VARCHAR(1),
+  state             VARCHAR(1),
   create_by         VARCHAR(255),
   create_time       DATETIME,
   update_by         VARCHAR(255),
@@ -162,10 +162,23 @@ CREATE TABLE card_order
 
 CREATE TABLE order_state_router
 (
-  id                INTEGER NOT NULL PRIMARY KEY ,
+  id                VARCHAR(50) NOT NULL PRIMARY KEY ,
   state_name        VARCHAR(100) NOT NULL UNIQUE ,
   next_state_name   VARCHAR(100) NOT NULL UNIQUE ,
   state             VARCHAR(1),
+  create_by         VARCHAR(2000),
+  create_time       DATETIME,
+  update_by         VARCHAR(2000),
+  update_time       DATETIME
+);
+
+
+CREATE TABLE order_operate_record
+(
+  id                VARCHAR(50) NOT NULL PRIMARY KEY ,
+  operation_id      VARCHAR(50) NOT NULL UNIQUE ,
+  start_time        DATETIME,
+  end_time          DATETIME,
   create_by         VARCHAR(2000),
   create_time       DATETIME,
   update_by         VARCHAR(2000),

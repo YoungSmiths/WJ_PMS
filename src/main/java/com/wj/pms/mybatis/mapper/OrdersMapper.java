@@ -14,9 +14,9 @@ import org.apache.ibatis.type.JdbcType;
 public interface OrdersMapper {
     @Delete({
         "delete from orders",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     @Insert({
         "insert into orders (id, order_name, ",
@@ -29,7 +29,7 @@ public interface OrdersMapper {
         "describe_info, status, ",
         "create_by, create_time, ",
         "update_by, update_time)",
-        "values (#{id,jdbcType=INTEGER}, #{orderName,jdbcType=VARCHAR}, ",
+        "values (#{id,jdbcType=VARCHAR}, #{orderName,jdbcType=VARCHAR}, ",
         "#{orderCode,jdbcType=VARCHAR}, #{contractNo,jdbcType=VARCHAR}, ",
         "#{count,jdbcType=VARCHAR}, #{papertype,jdbcType=VARCHAR}, ",
         "#{width,jdbcType=VARCHAR}, #{lengths,jdbcType=VARCHAR}, ",
@@ -40,7 +40,7 @@ public interface OrdersMapper {
         "#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})"
     })
-    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=Integer.class)
+    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=String.class)
     int insert(Orders record);
 
     @Select({
@@ -49,10 +49,10 @@ public interface OrdersMapper {
         "out_side_hander, package_require, parts, design_pic_path, sub_order_info, describe_info, ",
         "status, create_by, create_time, update_by, update_time",
         "from orders",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="order_name", property="orderName", jdbcType=JdbcType.VARCHAR),
         @Result(column="order_code", property="orderCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="contract_no", property="contractNo", jdbcType=JdbcType.VARCHAR),
@@ -73,7 +73,7 @@ public interface OrdersMapper {
         @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    Orders selectByPrimaryKey(Integer id);
+    Orders selectByPrimaryKey(String id);
 
     @Select({
         "select",
@@ -83,7 +83,7 @@ public interface OrdersMapper {
         "from orders"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="order_name", property="orderName", jdbcType=JdbcType.VARCHAR),
         @Result(column="order_code", property="orderCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="contract_no", property="contractNo", jdbcType=JdbcType.VARCHAR),
@@ -127,7 +127,7 @@ public interface OrdersMapper {
           "create_time = #{createTime,jdbcType=TIMESTAMP},",
           "update_by = #{updateBy,jdbcType=VARCHAR},",
           "update_time = #{updateTime,jdbcType=TIMESTAMP}",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(Orders record);
 }

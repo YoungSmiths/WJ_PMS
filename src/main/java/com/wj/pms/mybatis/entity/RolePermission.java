@@ -3,11 +3,11 @@ package com.wj.pms.mybatis.entity;
 import java.util.Date;
 
 public class RolePermission {
-    private Integer id;
+    private String id;
 
-    private Integer roleId;
+    private String roleId;
 
-    private Integer permissionId;
+    private String permissionId;
 
     private String state;
 
@@ -19,28 +19,28 @@ public class RolePermission {
 
     private Date updateTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = id == null ? null : id.trim();
     }
 
-    public Integer getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId == null ? null : roleId.trim();
     }
 
-    public Integer getPermissionId() {
+    public String getPermissionId() {
         return permissionId;
     }
 
-    public void setPermissionId(Integer permissionId) {
-        this.permissionId = permissionId;
+    public void setPermissionId(String permissionId) {
+        this.permissionId = permissionId == null ? null : permissionId.trim();
     }
 
     public String getState() {

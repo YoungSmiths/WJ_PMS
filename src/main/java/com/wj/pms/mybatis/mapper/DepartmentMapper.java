@@ -14,21 +14,21 @@ import org.apache.ibatis.type.JdbcType;
 public interface DepartmentMapper {
     @Delete({
         "delete from department",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     @Insert({
         "insert into department (id, department_name, ",
         "department_code, state, ",
         "create_by, create_time, ",
         "update_by, update_time)",
-        "values (#{id,jdbcType=INTEGER}, #{departmentName,jdbcType=VARCHAR}, ",
+        "values (#{id,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR}, ",
         "#{departmentCode,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, ",
         "#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})"
     })
-    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=Integer.class)
+    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=String.class)
     int insert(Department record);
 
     @Select({
@@ -36,10 +36,10 @@ public interface DepartmentMapper {
         "id, department_name, department_code, state, create_by, create_time, update_by, ",
         "update_time",
         "from department",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="department_name", property="departmentName", jdbcType=JdbcType.VARCHAR),
         @Result(column="department_code", property="departmentCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
@@ -48,7 +48,7 @@ public interface DepartmentMapper {
         @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    Department selectByPrimaryKey(Integer id);
+    Department selectByPrimaryKey(String id);
 
     @Select({
         "select",
@@ -57,7 +57,7 @@ public interface DepartmentMapper {
         "from department"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="department_name", property="departmentName", jdbcType=JdbcType.VARCHAR),
         @Result(column="department_code", property="departmentCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
@@ -77,7 +77,7 @@ public interface DepartmentMapper {
           "create_time = #{createTime,jdbcType=TIMESTAMP},",
           "update_by = #{updateBy,jdbcType=VARCHAR},",
           "update_time = #{updateTime,jdbcType=TIMESTAMP}",
-        "where id = #{id,jdbcType=INTEGER}"
+        "where id = #{id,jdbcType=VARCHAR}"
     })
     int updateByPrimaryKey(Department record);
 }
