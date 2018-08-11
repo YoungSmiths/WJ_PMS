@@ -18,11 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
-/**
- * Created by shiy on 2017/7/22.
- */
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -36,40 +33,37 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PmsDao pmsDao;
 
-    public User getAdminUser() {
-        User admin = getUserByName("admin");
-        if (admin == null) {
+    public User getSystemAdmin() {
+        User system = getUserByCode("system");
+        if (system == null) {
             synchronized (this) {
-                admin = getUserByName("admin");
-                if (admin == null) {
-                    admin = new User();
-                    admin.setName("admin");
-                    admin.setPassword("admin");
-                    admin.setDisplayName("Administrator");
-                    admin.setMobile("13718450920");
-                    admin.setQq("1347908776");
-                    admin.setDisplayName("石洋");
-                    admin.setState("1");
-                    admin.setWeChat("13718450920");
-                    userMapper.insert(admin);
+                system = getUserByCode("system");
+                if (system == null) {
+                    system = new User();
+                    system.setDisplayName("系统管理员");
+                    system.setPassword("system");
+                    system.setMobile("13718450920");
+                    system.setQq("1347908776");
+                    system.setState("1");
+                    system.setWeChat("13718450920");
+                    userMapper.insert(system);
                 }
             }
         }
-        return pmsDao.selectUserByName("admin");
+        return pmsDao.selectUserByCode("system");
     }
 
     public User registerUser(User user) throws PmsException {
-        if (getUserByName(user.getName()) != null) {
+        if (getUserByCode(user.getCode()) != null) {
             throw new PmsException(1002, "user has existed");
         }
-        user.setPassword(user.getPassword());
         userMapper.insert(user);
-        return pmsDao.selectUserByName(user.getName());
+        return pmsDao.selectUserByCode(user.getCode());
     }
 
     public boolean isUserExisted(String userName) {
         try {
-            User user = pmsDao.selectUserByName(userName);
+            User user = pmsDao.selectUserByCode(userName);
             return user != null;
         } catch (Exception e) {
             LOGGER.error("Service: isUserExisted({}) error {}", userName, e);
@@ -77,13 +71,13 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public User getUserByName(String userName) {
-        return pmsDao.selectUserByName(userName);
+    public User getUserByCode(String code) {
+        return pmsDao.selectUserByCode(code);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = getUserByName(username);
+        User user = getUserByCode(username);
         if (user == null) {
             throw new UsernameNotFoundException("Username " + username + " not found.");
         }
@@ -101,7 +95,7 @@ public class UserService implements UserDetailsService {
 
             @Override
             public String getUsername() {
-                return authenticatedUser.getName();
+                return authenticatedUser.getDisplayName();
             }
 
             @Override
@@ -129,7 +123,7 @@ public class UserService implements UserDetailsService {
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getName() != null) {
-            return getUserByName(auth.getName());
+            return getUserByCode(auth.getName());
         }
         return null;
     }

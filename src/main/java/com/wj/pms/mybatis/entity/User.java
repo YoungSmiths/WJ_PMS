@@ -5,7 +5,7 @@ import java.util.Date;
 public class User {
     private String id;
 
-    private String name;
+    private String code;
 
     private String displayName;
 
@@ -24,10 +24,6 @@ public class User {
     private String qq;
 
     private String weChat;
-
-    private String departmentId;
-
-    private String secret;
 
     private String mail;
 
@@ -49,12 +45,12 @@ public class User {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 
     public String getDisplayName() {
@@ -127,22 +123,6 @@ public class User {
 
     public void setWeChat(String weChat) {
         this.weChat = weChat == null ? null : weChat.trim();
-    }
-
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId == null ? null : departmentId.trim();
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret == null ? null : secret.trim();
     }
 
     public String getMail() {

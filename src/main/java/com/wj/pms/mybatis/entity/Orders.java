@@ -13,7 +13,7 @@ public class Orders {
 
     private String count;
 
-    private String papertype;
+    private String paperType;
 
     private String width;
 
@@ -33,7 +33,7 @@ public class Orders {
 
     private String describeInfo;
 
-    private String status;
+    private String state;
 
     private String createBy;
 
@@ -83,12 +83,12 @@ public class Orders {
         this.count = count == null ? null : count.trim();
     }
 
-    public String getPapertype() {
-        return papertype;
+    public String getPaperType() {
+        return paperType;
     }
 
-    public void setPapertype(String papertype) {
-        this.papertype = papertype == null ? null : papertype.trim();
+    public void setPaperType(String paperType) {
+        this.paperType = paperType == null ? null : paperType.trim();
     }
 
     public String getWidth() {
@@ -163,12 +163,12 @@ public class Orders {
         this.describeInfo = describeInfo == null ? null : describeInfo.trim();
     }
 
-    public String getStatus() {
-        return status;
+    public String getState() {
+        return state;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
     }
 
     public String getCreateBy() {

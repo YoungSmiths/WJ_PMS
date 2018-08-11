@@ -1,147 +1,194 @@
-
-CREATE TABLE pms_user_info
+CREATE TABLE  user
 (
-  id               INT AUTO_INCREMENT                           COMMENT '主鍵'    PRIMARY KEY,
-  user_name        VARCHAR(32)                        NOT NULL  COMMENT '用戶名',
-  secret           VARCHAR(50)                        NOT NULL  COMMENT '密碼',
-  telephone        VARCHAR(20)                        NULL      COMMENT '手機號',
-  sex              TINYINT(1) DEFAULT '1'             NOT NULL  COMMENT '性別',
-  age              INT                                NULL      COMMENT '年齡',
-  address          VARCHAR(500)                       NULL      COMMENT '地址',
-  is_configuration TINYINT(1) DEFAULT '0'             NULL      COMMENT '是否可配置',
-  create_by        VARCHAR(50)                        NULL      COMMENT '創建人',
-  date_created     DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '創建日期',
-  update_by        VARCHAR(50)                        NULL      COMMENT '更新人',
-  date_updated     DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '更新日期',
-  CONSTRAINT pms_user_info_id_uindex
-  UNIQUE (id),
-  CONSTRAINT pms_user_user_info_name_uindex
-  UNIQUE (user_name)
-)
-  COMMENT '用戶表';
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  code              VARCHAR(255) NOT NULL  UNIQUE,
+  display_name      VARCHAR(255),
+  id_no             VARCHAR(50) UNIQUE,
+  password          VARCHAR(255) NOT NULL,
+  birthday          VARCHAR(255),
+  sex               VARCHAR(1),
+  phone             VARCHAR(50),
+  mobile            VARCHAR(50),
+  qq                VARCHAR(50),
+  we_chat           VARCHAR(50),
+  mail              VARCHAR(50),
+  state             VARCHAR(1) NOT NULL,
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
 
-CREATE TABLE pms_role_info
+
+CREATE TABLE department
 (
-  id               INT AUTO_INCREMENT                           COMMENT '主鍵'    PRIMARY KEY,
-  role_name        VARCHAR(32)                        NOT NULL  COMMENT '角色名',
-  is_using           VARCHAR(50)                      NOT NULL  COMMENT '是否在用',
-  create_by        VARCHAR(50)                        NULL      COMMENT '創建人',
-  date_created     DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '創建日期',
-  update_by        VARCHAR(50)                        NULL      COMMENT '更新人',
-  date_updated     DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '更新日期',
-  CONSTRAINT pms_role_info_id_uindex
-  UNIQUE (id),
-  CONSTRAINT pms_role_info_user_name_uindex
-  UNIQUE (role_name)
-)
-  COMMENT '角色表';
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  department_name   VARCHAR(255) NOT NULL,
+  department_code   VARCHAR(50) NOT NULL,
+  state             VARCHAR(1),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
 
-CREATE TABLE pms_permission_info
+CREATE TABLE user_department_relation
 (
-  id               INT AUTO_INCREMENT                           COMMENT '主鍵'    PRIMARY KEY,
-  name             VARCHAR(50)                        NOT NULL  COMMENT '權限名',
-  code             VARCHAR(32)                        NOT NULL  COMMENT '編碼',
-  content          VARCHAR(500)                       NULL      COMMENT '內容',
-  describe_info    VARCHAR(500)                       NULL      COMMENT '描述',
-  is_using         INT                                NULL      COMMENT '是否在用',
-  create_by        VARCHAR(50)                        NULL      COMMENT '創建人',
-  date_created     DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '創建日期',
-  update_by        VARCHAR(50)                        NULL      COMMENT '更新人',
-  date_updated     DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '更新日期',
-  CONSTRAINT pms_permission_info_id_uindex
-  UNIQUE (id),
-  CONSTRAINT pms_permission_info_name_uindex
-  UNIQUE (name)
-)
-  COMMENT '权限表';
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  user_id           VARCHAR(255),
+  department_id     VARCHAR(50),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
 
-CREATE TABLE pms_base_orders
+CREATE TABLE role
 (
-  id                INT AUTO_INCREMENT                           COMMENT '主鍵'    PRIMARY KEY,
-  name              VARCHAR(50)                        NOT NULL  COMMENT '訂單名',
-  code              VARCHAR(32)                        NOT NULL  COMMENT '編碼',
-  contract          VARCHAR(500)                       NOT NULL  COMMENT '合同號',
-  count             INT(10)                            NULL      COMMENT '數量',
-  paperType         VARCHAR(500)                       NULL      COMMENT '用纸类型',
-  width             VARCHAR(50)                        NULL      COMMENT '扑克宽度',
-  lengths           VARCHAR(50)                        NULL      COMMENT '扑克长度',
-  print_require     VARCHAR(500)                       NULL      COMMENT '打印要求',
-  out_side_hander   VARCHAR(500)                       NULL      COMMENT '表面处理',
-  package_require   VARCHAR(500)                       NULL      COMMENT '包装要求',
-  parts             VARCHAR(500)                       NULL      COMMENT '配件',
-  describe_info     VARCHAR(200)                       NULL      COMMENT '描述',
-  status            VARCHAR(10)                        NOT NULL  COMMENT '狀態',
-  create_by         VARCHAR(50)                        NULL      COMMENT '創建人',
-  date_created      DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '創建日期',
-  update_by         VARCHAR(50)                        NULL      COMMENT '更新人',
-  date_updated      DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '更新日期',
-  CONSTRAINT pms_base_orders_id_uindex
-  UNIQUE (id),
-  CONSTRAINT pms_base_orders_name_uindex
-  UNIQUE (name)
-)
-  COMMENT '訂單基表';
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  role_code         VARCHAR(50) UNIQUE,
+  role_name         VARCHAR(50) UNIQUE,
+  state             VARCHAR(1),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
 
-  CREATE TABLE pms_card_orders
+CREATE TABLE user_role(
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  user_id           VARCHAR(50) NOT NULL,
+  role_id           VARCHAR(50) NOT NULL,
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
+
+CREATE TABLE permission
 (
-  id                INT AUTO_INCREMENT                           COMMENT '主鍵'    PRIMARY KEY,
-  name              VARCHAR(50)                        NOT NULL  COMMENT '訂單名',
-  code              VARCHAR(32)                        NOT NULL  COMMENT '編碼',
-  parent_order_id   VARCHAR(32)                        NOT NULL  COMMENT '父訂單ID',
-  version_house     VARCHAR(500)                       NOT NULL  COMMENT '版房',
-  open_paper        VARCHAR(500)                       NULL      COMMENT '開紙',
-  print             VARCHAR(500)                       NULL      COMMENT '印刷',
-  out_side_hander   VARCHAR(500)                       NULL      COMMENT '表面处理',
-  open_card         VARCHAR(500)                       NULL      COMMENT '开牌',
-  blunt_card        VARCHAR(500)                       NULL      COMMENT '冲牌',
-  describe_info     VARCHAR(200)                       NULL      COMMENT '描述',
-  status            VARCHAR(10)                        NOT NULL  COMMENT '狀態',
-  create_by         VARCHAR(50)                        NULL      COMMENT '創建人',
-  date_created      DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '創建日期',
-  update_by         VARCHAR(50)                        NULL      COMMENT '更新人',
-  date_updated      DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '更新日期',
-  CONSTRAINT pms_card_orders_id_uindex
-  UNIQUE (id),
-  CONSTRAINT pms_card_orders_name_uindex
-  UNIQUE (name)
-)
-  COMMENT '卡牌子訂單表';
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  permission_name   VARCHAR(255) UNIQUE,
+  permission_code   VARCHAR(50) UNIQUE,
+  content           VARCHAR(2000),
+  describe_info     VARCHAR(500),
+  state             VARCHAR(1),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
 
-  CREATE TABLE pms_box_orders
+CREATE TABLE role_permission
 (
-  id                INT AUTO_INCREMENT                           COMMENT '主鍵'    PRIMARY KEY,
-  name              VARCHAR(50)                        NOT NULL  COMMENT '扑克名称',
-  code              VARCHAR(32)                        NOT NULL  COMMENT '編碼',
-  parent_order_id   VARCHAR(32)                        NOT NULL  COMMENT '父訂單ID',
-  version_house     VARCHAR(500)                       NOT NULL  COMMENT '版房',
-  open_paper        VARCHAR(500)                       NULL      COMMENT '開紙',
-  print             VARCHAR(500)                       NULL      COMMENT '印刷',
-  out_side_hander   VARCHAR(500)                       NULL      COMMENT '表面处理',
-  box_beer          VARCHAR(500)                       NULL      COMMENT '啤盒',
-  box_sticky        VARCHAR(500)                       NULL      COMMENT '粘盒',
-  describe_info     VARCHAR(200)                       NULL      COMMENT '描述',
-  status            VARCHAR(10)                        NOT NULL  COMMENT '狀態',
-  create_by         VARCHAR(50)                        NULL      COMMENT '創建人',
-  date_created      DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '創建日期',
-  update_by         VARCHAR(50)                        NULL      COMMENT '更新人',
-  date_updated      DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '更新日期',
-  CONSTRAINT pms_box_orders_id_uindex
-  UNIQUE (id),
-  CONSTRAINT pms_box_orders_name_uindex
-  UNIQUE (name)
-)
-  COMMENT '紙盒子訂單表';
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  role_id           VARCHAR(50) NOT NULL,
+  permission_id     VARCHAR(50) NOT NULL,
+  state             VARCHAR(1),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
 
-  CREATE TABLE pms_operation_history
+CREATE TABLE exception
 (
-  id                INT AUTO_INCREMENT                           COMMENT '主鍵'    PRIMARY KEY,
-  order_id          VARCHAR(50)                        NOT NULL  COMMENT '订单ID',
-  permission_id     VARCHAR(32)                        NOT NULL  COMMENT '权限ID',
-  content           VARCHAR(32)                        NOT NULL  COMMENT '操作内容',
-  operator          VARCHAR(32)                        NOT NULL  COMMENT '操作人',
-  describe_info     VARCHAR(200)                       NULL      COMMENT '描述',
-  create_by         VARCHAR(50)                        NULL      COMMENT '創建人',
-  date_created      DATETIME DEFAULT CURRENT_TIMESTAMP NULL      COMMENT '創建日期'
-)
-  COMMENT '操作记录表';
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  exception_code    VARCHAR(50),
+  message           VARCHAR(255),
+  order_id          VARCHAR(50),
+  employee_id       VARCHAR(50),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
 
+CREATE TABLE orders
+(
+  id                VARCHAR(50) NOT NULL PRIMARY KEY,
+  order_name        VARCHAR(255),
+  order_code        VARCHAR(50),
+  contract_no       VARCHAR(255),
+  count             VARCHAR(255),
+  paper_type        VARCHAR(255),
+  width             VARCHAR(255),
+  lengths           VARCHAR(255),
+  print_require     VARCHAR(2000),
+  out_side_hander   VARCHAR(2000),
+  package_require   VARCHAR(2000),
+  parts             VARCHAR(2000),
+  design_pic_path   VARCHAR(2000),
+  sub_order_info    VARCHAR(2000),
+  describe_info     VARCHAR(2000),
+  state             VARCHAR(200),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
+
+CREATE TABLE box_order
+(
+  id                VARCHAR(50) PRIMARY KEY,
+  box_order_name    VARCHAR(255),
+  box_order_code    VARCHAR(50),
+  parent_order_id   VARCHAR(50) NOT NULL ,
+  version_house     VARCHAR(500),
+  open_paper        VARCHAR(500),
+  print             VARCHAR(500),
+  out_side_hander   VARCHAR(500),
+  box_beer          VARCHAR(500),
+  box_sticky        VARCHAR(500),
+  state             VARCHAR(200),
+  describe_info     VARCHAR(2000),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
+
+CREATE TABLE card_order
+(
+  id                VARCHAR(50) PRIMARY KEY ,
+  card_order_name   VARCHAR(255) NOT NULL UNIQUE ,
+  code              VARCHAR(50) NOT NULL UNIQUE ,
+  parent_order_id   VARCHAR(50) NOT NULL ,
+  version_house     VARCHAR(500),
+  open_paper        VARCHAR(500),
+  print             VARCHAR(500),
+  out_side_hander   VARCHAR(500),
+  open_card         VARCHAR(500),
+  blunt_card        VARCHAR(500),
+  describe_info     VARCHAR(200),
+  state             VARCHAR(200),
+  create_by         VARCHAR(255),
+  create_time       DATETIME,
+  update_by         VARCHAR(255),
+  update_time       DATETIME
+);
+
+CREATE TABLE order_state_router
+(
+  id                VARCHAR(50) NOT NULL PRIMARY KEY ,
+  state_name        VARCHAR(100) NOT NULL UNIQUE ,
+  next_state_name   VARCHAR(100) NOT NULL UNIQUE ,
+  state             VARCHAR(1),
+  create_by         VARCHAR(2000),
+  create_time       DATETIME,
+  update_by         VARCHAR(2000),
+  update_time       DATETIME
+);
+
+
+CREATE TABLE order_operate_record
+(
+  id                VARCHAR(50) NOT NULL PRIMARY KEY ,
+  operation_id      VARCHAR(50) NOT NULL UNIQUE ,
+  start_time        DATETIME,
+  end_time          DATETIME,
+  create_by         VARCHAR(2000),
+  create_time       DATETIME,
+  update_by         VARCHAR(2000),
+  update_time       DATETIME
+);

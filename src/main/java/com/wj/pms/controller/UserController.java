@@ -43,16 +43,6 @@ public class UserController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/register/{userName}", method = RequestMethod.POST)
-    @ResponseBody
-    public Result isUserUniq(@PathVariable("userName") String userName) {
-        if (userService.getUserByName(userName) != null) {
-            return Result.buildSuccessResult(true);
-        } else {
-            return Result.buildFailResult(1002, "user is not exist");
-        }
-    }
-
     @RequestMapping(value = "/current", method = RequestMethod.GET)
     @ResponseBody
     public Result currentUser(HttpSession session) {
@@ -60,32 +50,18 @@ public class UserController {
         if (user != null) {
             User user1 = new User();
             user1.setId(user.getId());
-            user1.setName(user.getName());
+            user1.setCode(user.getCode());
+            user1.setDisplayName(user.getDisplayName());
             return Result.success(user1);
         } else {
             return Result.success(null);
         }
     }
 
-    @RequestMapping(value = "/login_info", method = RequestMethod.GET)
-    @ResponseBody
-    public Result signIn(HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            User user1 = new User();
-            user1.setId(user.getId());
-            user1.setName(user.getName());
-            return Result.success(user1);
-        } else {
-            session.setAttribute("user", new User());
-            return Result.fail("Please login first.");
-        }
-    }
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Result signIn(@RequestBody User user, HttpSession session, HttpServletRequest request) {
-        User enUser = userService.getUserByName(user.getName());
+        User enUser = userService.getUserByCode(user.getCode());
         if (enUser == null) {
             return Result.buildResult(1002, "Couldn't find the user", null);
         }
@@ -94,14 +70,15 @@ public class UserController {
         }
         session.setAttribute("user", enUser);
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getCode(), user.getPassword());
         token.setDetails(new WebAuthenticationDetails(request));
         Authentication auth = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
         User user1 = new User();
         user1.setId(enUser.getId());
-        user1.setName(enUser.getName());
-//        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登录：" + user.getName(), "", "", session);
+        user1.setCode(enUser.getCode());
+        user1.setDisplayName(enUser.getDisplayName());
+//        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登录：" + user.getDisplayName(), "", "", session);
         return Result.success(user1);
     }
 
@@ -109,8 +86,7 @@ public class UserController {
     public Result signOut(@RequestBody Map<String, Object> jsonObject, HttpSession session, HttpServletResponse response) {
         User user = (User) session.getAttribute("user");
         session.removeAttribute("user");
-//        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登出：" + user.getName(), "", "", session);
+//        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登出：" + user.getDisplayName(), "", "", session);
         return Result.buildResponse(response, null, 0, "logout success", null);
     }
 }
-

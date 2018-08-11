@@ -19,36 +19,36 @@ public interface UserMapper {
     int deleteByPrimaryKey(String id);
 
     @Insert({
-        "insert into user (id, name, ",
+        "insert into user (id, code, ",
         "display_name, id_no, ",
         "password, birthday, ",
         "sex, phone, mobile, ",
-        "qq, we_chat, department_id, ",
-        "secret, mail, state, ",
-        "create_by, create_time, ",
-        "update_by, update_time)",
-        "values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, ",
+        "qq, we_chat, mail, ",
+        "state, create_by, ",
+        "create_time, update_by, ",
+        "update_time)",
+        "values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, ",
         "#{displayName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, ",
         "#{password,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, ",
         "#{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, ",
-        "#{qq,jdbcType=VARCHAR}, #{weChat,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, ",
-        "#{secret,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, ",
-        "#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
-        "#{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})"
+        "#{qq,jdbcType=VARCHAR}, #{weChat,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, ",
+        "#{state,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, ",
+        "#{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, ",
+        "#{updateTime,jdbcType=TIMESTAMP})"
     })
     @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=String.class)
     int insert(User record);
 
     @Select({
         "select",
-        "id, name, display_name, id_no, password, birthday, sex, phone, mobile, qq, we_chat, ",
-        "department_id, secret, mail, state, create_by, create_time, update_by, update_time",
+        "id, code, display_name, id_no, password, birthday, sex, phone, mobile, qq, we_chat, ",
+        "mail, state, create_by, create_time, update_by, update_time",
         "from user",
         "where id = #{id,jdbcType=VARCHAR}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
-        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
         @Result(column="display_name", property="displayName", jdbcType=JdbcType.VARCHAR),
         @Result(column="id_no", property="idNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR),
@@ -58,8 +58,6 @@ public interface UserMapper {
         @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR),
         @Result(column="qq", property="qq", jdbcType=JdbcType.VARCHAR),
         @Result(column="we_chat", property="weChat", jdbcType=JdbcType.VARCHAR),
-        @Result(column="department_id", property="departmentId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="secret", property="secret", jdbcType=JdbcType.VARCHAR),
         @Result(column="mail", property="mail", jdbcType=JdbcType.VARCHAR),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_by", property="createBy", jdbcType=JdbcType.VARCHAR),
@@ -71,13 +69,13 @@ public interface UserMapper {
 
     @Select({
         "select",
-        "id, name, display_name, id_no, password, birthday, sex, phone, mobile, qq, we_chat, ",
-        "department_id, secret, mail, state, create_by, create_time, update_by, update_time",
+        "id, code, display_name, id_no, password, birthday, sex, phone, mobile, qq, we_chat, ",
+        "mail, state, create_by, create_time, update_by, update_time",
         "from user"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
-        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
         @Result(column="display_name", property="displayName", jdbcType=JdbcType.VARCHAR),
         @Result(column="id_no", property="idNo", jdbcType=JdbcType.VARCHAR),
         @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR),
@@ -87,8 +85,6 @@ public interface UserMapper {
         @Result(column="mobile", property="mobile", jdbcType=JdbcType.VARCHAR),
         @Result(column="qq", property="qq", jdbcType=JdbcType.VARCHAR),
         @Result(column="we_chat", property="weChat", jdbcType=JdbcType.VARCHAR),
-        @Result(column="department_id", property="departmentId", jdbcType=JdbcType.VARCHAR),
-        @Result(column="secret", property="secret", jdbcType=JdbcType.VARCHAR),
         @Result(column="mail", property="mail", jdbcType=JdbcType.VARCHAR),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_by", property="createBy", jdbcType=JdbcType.VARCHAR),
@@ -100,7 +96,7 @@ public interface UserMapper {
 
     @Update({
         "update user",
-        "set name = #{name,jdbcType=VARCHAR},",
+        "set code = #{code,jdbcType=VARCHAR},",
           "display_name = #{displayName,jdbcType=VARCHAR},",
           "id_no = #{idNo,jdbcType=VARCHAR},",
           "password = #{password,jdbcType=VARCHAR},",
@@ -110,8 +106,6 @@ public interface UserMapper {
           "mobile = #{mobile,jdbcType=VARCHAR},",
           "qq = #{qq,jdbcType=VARCHAR},",
           "we_chat = #{weChat,jdbcType=VARCHAR},",
-          "department_id = #{departmentId,jdbcType=VARCHAR},",
-          "secret = #{secret,jdbcType=VARCHAR},",
           "mail = #{mail,jdbcType=VARCHAR},",
           "state = #{state,jdbcType=VARCHAR},",
           "create_by = #{createBy,jdbcType=VARCHAR},",

@@ -158,7 +158,7 @@
             login (e) {
                 e.preventDefault();
                 let param = {
-                    name: $('.login-username').val(),
+                    code: $('.login-username').val(),
                     password: $('.login-password').val()
                 };
                 /*
@@ -184,7 +184,7 @@
                     success: (data) => {
                         if (data.code === 0) {
                             this.$store.dispatch('setToken', {
-                                username: param.name,
+                                username: param.code,
                                 token: 'login',
                             })
                             this.hide();
@@ -203,12 +203,12 @@
             register (e) {
                 e.preventDefault();
                 let param = {
-                    name: $('.reg-username').val(),
+                    code: $('.reg-username').val(),
                     displayName: $('.reg-realname').val(),
                     password: $('.reg-password').val(),
                     mail: $('.reg-email').val(),
                     role: 'general',
-                    state: ''
+                    state: '1'
                 }
                 $.ajax({
                     url: `${this.apiBase}/api/user/register`,
@@ -219,7 +219,7 @@
                     processData: false,
                     success: (data) => {
                         if (data.code === 0) {
-                            this.$message.alert('注册成功')
+                            this.$message.alert('注册成功');
                             $('.reg-form input').val('');
                             this.show();
                         } else {
