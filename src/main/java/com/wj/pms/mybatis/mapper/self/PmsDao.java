@@ -1,11 +1,16 @@
 package com.wj.pms.mybatis.mapper.self;
 
+import com.wj.pms.bean.PermissionBean;
 import com.wj.pms.mybatis.entity.OrderStateRouter;
+import com.wj.pms.mybatis.entity.Orders;
 import com.wj.pms.mybatis.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.List;
 
 /**
  * Describe:
@@ -35,6 +40,16 @@ public interface PmsDao {
             @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
     User selectUserByCode(String code);
+
+    @Select("SELECT p.content FROM (SELECT * FROM user where code =  #{code, jdbcType=VARCHAR}) u\n" +
+            "  LEFT JOIN user_role ur on u.id = ur.user_id\n" +
+            "  LEFT JOIN role r on ur.role_id = r.id\n" +
+            "  LEFT JOIN role_permission rp on r.id = rp.role_id\n" +
+            "  LEFT JOIN permission p on rp.permission_id = p.id")
+    List<String> getUserPermissions(User user);
+
+    @Select("SELECT * FROM orders o WHERE o.state IN #{list}")
+    List<Orders> getOrders4User(@Param("list") List<String> list);
 
     @Select("select * from order_state_router a where a.state_name = #{name, jdbcType=VARCHAR}")
     OrderStateRouter selectOrderStateRouterByStateName(String name);
