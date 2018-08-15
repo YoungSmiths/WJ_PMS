@@ -60,6 +60,7 @@ public class OrdersController {
     public Result selectAll(HttpSession session){
         User user = (User) session.getAttribute("user");
         List<String> permitStates = pmsService.getPermitState(user);
+        permitStates.add("test");
         return Result.success(pmsService.getOrders4User(permitStates));
     }
 }

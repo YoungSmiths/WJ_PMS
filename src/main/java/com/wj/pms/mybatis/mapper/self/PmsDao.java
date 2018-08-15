@@ -4,10 +4,7 @@ import com.wj.pms.bean.PermissionBean;
 import com.wj.pms.mybatis.entity.OrderStateRouter;
 import com.wj.pms.mybatis.entity.Orders;
 import com.wj.pms.mybatis.entity.User;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
@@ -48,8 +45,35 @@ public interface PmsDao {
             "  LEFT JOIN permission p on rp.permission_id = p.id")
     List<String> getUserPermissions(User user);
 
-    @Select("SELECT * FROM orders o WHERE o.state IN #{list}")
+    @Select("SELECT * FROM orders o WHERE o.state IN " +
+            "<foreach collection=\"list\" index=\"index\" item=\"param1\" open=\"(\" separator=\",\" close=\")\">" +
+            "${param1}" +
+            "</foreach>")
+    @Results({
+            @Result(column="id", property="id", jdbcType= JdbcType.VARCHAR, id=true),
+            @Result(column="order_name", property="orderName", jdbcType=JdbcType.VARCHAR),
+            @Result(column="order_code", property="orderCode", jdbcType=JdbcType.VARCHAR),
+            @Result(column="contract_no", property="contractNo", jdbcType=JdbcType.VARCHAR),
+            @Result(column="count", property="count", jdbcType=JdbcType.VARCHAR),
+            @Result(column="paper_type", property="paperType", jdbcType=JdbcType.VARCHAR),
+            @Result(column="width", property="width", jdbcType=JdbcType.VARCHAR),
+            @Result(column="lengths", property="lengths", jdbcType=JdbcType.VARCHAR),
+            @Result(column="print_require", property="printRequire", jdbcType=JdbcType.VARCHAR),
+            @Result(column="out_side_hander", property="outSideHander", jdbcType=JdbcType.VARCHAR),
+            @Result(column="package_require", property="packageRequire", jdbcType=JdbcType.VARCHAR),
+            @Result(column="parts", property="parts", jdbcType=JdbcType.VARCHAR),
+            @Result(column="describe_info", property="describeInfo", jdbcType=JdbcType.VARCHAR),
+            @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
+            @Result(column="create_by", property="createBy", jdbcType=JdbcType.VARCHAR),
+            @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
+            @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
+            @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
+    })
     List<Orders> getOrders4User(@Param("list") List<String> list);
+
+
+
+
 
     @Select("select * from order_state_router a where a.state_name = #{name, jdbcType=VARCHAR}")
     OrderStateRouter selectOrderStateRouterByStateName(String name);

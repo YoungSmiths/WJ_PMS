@@ -47,6 +47,12 @@ Wangjing process management system.
 + 财务审核
 + 审核完成可申请发货
 
+|code|name|desc|next_code|state|
+|start|开始||waitDesign|待设计|1|
+|waitDesign| 
+
+
+
 ## 表结构设计
 ### 用户表（wj_pmg_user)
 |字段名|描述|
