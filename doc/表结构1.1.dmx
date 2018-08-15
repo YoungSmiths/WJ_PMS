@@ -2810,16 +2810,17 @@ Horz2=1</GraphDesc>
   <ID>14</ID>
   <Name>router_info</Name>
   <Caption>路由表</Caption>
+  <Memo>一个路由编码，职能对应一个状态编码，可对应多个下一状态编码</Memo>
   <CreateDate>2018/8/16 7:25:44</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>14</OrderNo>
   <GraphDesc>Left=887.00
-Top=619.00</GraphDesc>
+Top=610.24</GraphDesc>
 </DataModels_item1_item0_item14>
 
 
 <DataModels_item1_item0_item14_item0>
-  <Count>8</Count>
+  <Count>9</Count>
 </DataModels_item1_item0_item14_item0>
 
 
@@ -2841,11 +2842,37 @@ Top=619.00</GraphDesc>
 
 <DataModels_item1_item0_item14_item0_item2>
   <CTVER>43543230</CTVER>
-  <ID>49</ID>
+  <ID>95</ID>
   <Name>code</Name>
-  <CreateDate>2018/8/16 7:27:32</CreateDate>
+  <CreateDate>2018/8/16 7:41:31</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>2</OrderNo>
+  <DisplayName>路由编码</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=747.00,694.00
+P2=817.00,694.00
+P3=817.00,693.00
+P4=887.00,693.00
+HookP1=159.00,107.00
+HookP2=1.00,82.76
+Mod_OP1=0
+Mod_OP2=0
+Mod_CP=0
+Horz1=1
+Horz2=1</GraphDesc>
+</DataModels_item1_item0_item14_item0_item2>
+
+
+<DataModels_item1_item0_item14_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>49</ID>
+  <Name>state_code</Name>
+  <CreateDate>2018/8/16 7:27:32</CreateDate>
+  <ModifyDate>1899/12/30</ModifyDate>
+  <OrderNo>3</OrderNo>
   <DisplayName>状态编码</DisplayName>
   <DataType>1</DataType>
   <KeyFieldType>3</KeyFieldType>
@@ -2865,35 +2892,19 @@ Mod_OP2=0
 Mod_CP=0
 Horz1=1
 Horz2=1</GraphDesc>
-</DataModels_item1_item0_item14_item0_item2>
-
-
-<DataModels_item1_item0_item14_item0_item3>
-  <CTVER>43543230</CTVER>
-  <ID>50</ID>
-  <Name>next_code</Name>
-  <CreateDate>2018/8/16 7:27:32</CreateDate>
-  <ModifyDate>1899/12/30</ModifyDate>
-  <OrderNo>3</OrderNo>
-  <DisplayName>状态名称</DisplayName>
-  <DataType>1</DataType>
-  <Nullable>1</Nullable>
-  <EditorReadOnly>0</EditorReadOnly>
-  <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item14_item0_item3>
 
 
 <DataModels_item1_item0_item14_item0_item4>
   <CTVER>43543230</CTVER>
-  <ID>51</ID>
-  <Name>state</Name>
+  <ID>50</ID>
+  <Name>next_code</Name>
   <CreateDate>2018/8/16 7:27:32</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>4</OrderNo>
-  <DisplayName>是否有效</DisplayName>
+  <DisplayName>下一状态</DisplayName>
   <DataType>1</DataType>
   <Nullable>1</Nullable>
-  <DataLength>1</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item14_item0_item4>
@@ -2901,14 +2912,15 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item14_item0_item5>
   <CTVER>43543230</CTVER>
-  <ID>52</ID>
-  <Name>name_created</Name>
+  <ID>51</ID>
+  <Name>state</Name>
   <CreateDate>2018/8/16 7:27:32</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>5</OrderNo>
-  <DisplayName>创建人姓名</DisplayName>
+  <DisplayName>是否有效</DisplayName>
   <DataType>1</DataType>
   <Nullable>1</Nullable>
+  <DataLength>1</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item14_item0_item5>
@@ -2916,13 +2928,13 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item14_item0_item6>
   <CTVER>43543230</CTVER>
-  <ID>53</ID>
-  <Name>date_created</Name>
+  <ID>52</ID>
+  <Name>name_created</Name>
   <CreateDate>2018/8/16 7:27:32</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>6</OrderNo>
-  <DisplayName>创建日期</DisplayName>
-  <DataType>4</DataType>
+  <DisplayName>创建人姓名</DisplayName>
+  <DataType>1</DataType>
   <Nullable>1</Nullable>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -2931,13 +2943,13 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item14_item0_item7>
   <CTVER>43543230</CTVER>
-  <ID>54</ID>
-  <Name>name_updated</Name>
+  <ID>53</ID>
+  <Name>date_created</Name>
   <CreateDate>2018/8/16 7:27:32</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>7</OrderNo>
-  <DisplayName>更新人姓名</DisplayName>
-  <DataType>1</DataType>
+  <DisplayName>创建日期</DisplayName>
+  <DataType>4</DataType>
   <Nullable>1</Nullable>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -2946,17 +2958,32 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item14_item0_item8>
   <CTVER>43543230</CTVER>
+  <ID>54</ID>
+  <Name>name_updated</Name>
+  <CreateDate>2018/8/16 7:27:32</CreateDate>
+  <ModifyDate>1899/12/30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <DisplayName>更新人姓名</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item14_item0_item8>
+
+
+<DataModels_item1_item0_item14_item0_item9>
+  <CTVER>43543230</CTVER>
   <ID>55</ID>
   <Name>date_updated</Name>
   <CreateDate>2018/8/16 7:27:32</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
-  <OrderNo>8</OrderNo>
+  <OrderNo>9</OrderNo>
   <DisplayName>更新时间</DisplayName>
   <DataType>4</DataType>
   <Nullable>1</Nullable>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
-</DataModels_item1_item0_item14_item0_item8>
+</DataModels_item1_item0_item14_item0_item9>
 
 
 </CTOXML>
