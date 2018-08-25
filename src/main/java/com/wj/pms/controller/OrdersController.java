@@ -1,5 +1,6 @@
 package com.wj.pms.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wj.pms.bean.PermissionBean;
 import com.wj.pms.common.Result;
 import com.wj.pms.mybatis.entity.Orders;
@@ -7,9 +8,12 @@ import com.wj.pms.mybatis.entity.User;
 import com.wj.pms.mybatis.mapper.OrdersMapper;
 import com.wj.pms.service.PmsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,7 +64,10 @@ public class OrdersController {
     public Result selectAll(HttpSession session){
         User user = (User) session.getAttribute("user");
         List<String> permitStates = pmsService.getPermitState(user);
-        permitStates.add("test");
-        return Result.success(pmsService.getOrders4User(permitStates));
+        List<Orders> list = new ArrayList<>();
+        for(String a : permitStates){
+            list.addAll(pmsService.getOrders4User(a));
+        }
+        return Result.success(list);
     }
 }

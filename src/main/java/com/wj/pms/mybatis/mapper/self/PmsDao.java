@@ -38,17 +38,15 @@ public interface PmsDao {
     })
     User selectUserByCode(String code);
 
-    @Select("SELECT p.content FROM (SELECT * FROM user where code =  #{code, jdbcType=VARCHAR}) u\n" +
-            "  LEFT JOIN user_role ur on u.id = ur.user_id\n" +
-            "  LEFT JOIN role r on ur.role_id = r.id\n" +
-            "  LEFT JOIN role_permission rp on r.id = rp.role_id\n" +
-            "  LEFT JOIN permission p on rp.permission_id = p.id")
+    @Select("SELECT p.content FROM user u\n" +
+            "      LEFT JOIN user_role ur on u.id = ur.user_id\n" +
+            "      LEFT JOIN role r on ur.role_id = r.id\n" +
+            "      LEFT JOIN role_permission rp on r.id = rp.role_id\n" +
+            "      LEFT JOIN permission p on rp.permission_id = p.id\n" +
+            "      WHERE u.code = #{code, jdbcType=VARCHAR}")
     List<String> getUserPermissions(User user);
 
-    @Select("SELECT * FROM orders o WHERE o.state IN " +
-            "<foreach collection=\"list\" index=\"index\" item=\"param1\" open=\"(\" separator=\",\" close=\")\">" +
-            "${param1}" +
-            "</foreach>")
+    @Select("SELECT * FROM orders o WHERE o.state = #{list, jdbcType=VARCHAR}")
     @Results({
             @Result(column="id", property="id", jdbcType= JdbcType.VARCHAR, id=true),
             @Result(column="order_name", property="orderName", jdbcType=JdbcType.VARCHAR),
@@ -69,7 +67,7 @@ public interface PmsDao {
             @Result(column="update_by", property="updateBy", jdbcType=JdbcType.VARCHAR),
             @Result(column="update_time", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
-    List<Orders> getOrders4User(@Param("list") List<String> list);
+    List<Orders> getOrders4User(String list);
 
 
 

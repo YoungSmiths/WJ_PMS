@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+ 
+	<head>
+		<meta charset="UTF-8" />
+		<title>websocket chat</title>
+	</head>
+ 
+	<body>
+ 
+		<div>
+			
+			<form enctype="multipart/form-data" id="uploadForm">
+			  <input type="file" name="uploadFile" id="upload_file" style="margin-bottom:10px;">
+			    <input type="button" id="uploadPicButton" value="上传" onclick="uploadImage()">
+			 </form>
+		</div>
+		
+		<hr color="blanchedalmond"/>
+
+		
+		<hr color="chartreuse" />
+		<div id="imgDiv" style="width: 30%;height: 30%;">
+			<img src="http://localhost:9000/api/uploadDownload/downloadImage?imageName=123.jpeg" style="width: 160px;height: 160px;"/>
+		</div>
+
+
+ <h2>上传多个文件 实例</h2>  
+    <form action="http://localhost:9000/api/uploadDownload/uploadFiles" method="post"  enctype="multipart/form-data">  
+        <p>选择文件:<input type="file" name="file"></p>
+        <p>选择文件:<input type="file" name="file"></p>
+        <p><input type="submit" value="提交"></p>
+    </form>  
+		
+</body>
+ 
+	<!--<script 	="js/jquery-3.2.1.min.js"></script>
+	<script th:src="@{stomp.min.js}"></script>
+	<script src="js/sockjs.min.js"></script>-->
+ 
+	<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js">
+</script>
+
+	<script>
+		function uploadImgTest() {
+			
+ 
+		}
+		
+		function uploadImage(){
+console.log("111111111111");
+
+		var uploadUrl = "http://localhost:9000/api/uploadDownload/uploadImage";	
+		var pic = $('#upload_file')[0].files[0];
+		var fd = new FormData();
+		//fd.append('uploadFile', pic);
+		fd.append('file', pic);
+		$.ajax({
+		    url:uploadUrl,
+		    type:"post",
+		    data: fd,
+		    cache: false,
+		    dataType: 'jsonp',
+		    contentType: false,
+		    processData: false,
+		    success:function(data){
+		    	console.log("the data is : {}",data);
+		    	if(data.code == 0){
+		    		console.log("上传成功后的文件路径为："+data.data);
+		    		var img = $("<img />")
+		    		img.attr("src",downUrl+"?imageName="+data.data);
+		    		img.width("160px");
+		    		img.height("160px");
+		    		$("#imgDiv").append(img);
+		    	}
+		        
+		    }
+		});
+			
+		}
+		
+	</script>
+ 
+</html>
+

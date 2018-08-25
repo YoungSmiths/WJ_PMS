@@ -9,6 +9,7 @@ import com.wj.pms.mybatis.mapper.self.BaseService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class PmsService extends BaseService{
         return getPermitStateBean(userPermissions);
     }
 
-    public List<Orders> getOrders4User(List<String> list){
+    public List<Orders> getOrders4User(String list){
         return pmsDao.getOrders4User(list);
     }
 
@@ -36,9 +37,9 @@ public class PmsService extends BaseService{
             PermissionBean permissionBean = new PermissionBean();
             permissionBean.setRouters(new ArrayList<>());
             JSONObject parse1 = (JSONObject) JSONObject.parse(perStr);
-            JSONArray parse = (JSONArray)parse1.get("routers") ;
-            permissionBeans.addAll(parse.toJavaList(String.class));
+            String routers = (String) parse1.get("router");
+            permissionBeans.addAll(Arrays.asList(routers));
         }
-        return permissionBeans.stream().distinct().collect(Collectors.toList());
+        return permissionBeans;
     }
 }
