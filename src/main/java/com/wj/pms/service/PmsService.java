@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,8 +38,12 @@ public class PmsService extends BaseService{
             PermissionBean permissionBean = new PermissionBean();
             permissionBean.setRouters(new ArrayList<>());
             JSONObject parse1 = (JSONObject) JSONObject.parse(perStr);
-            String routers = (String) parse1.get("router");
-            permissionBeans.addAll(Arrays.asList(routers));
+            JSONArray routerArray = (JSONArray)parse1.get("router");
+            Iterator<Object> iterator = routerArray.iterator();
+            while(iterator.hasNext()){
+                String next = (String)iterator.next();
+                permissionBeans.add(next);
+            }
         }
         return permissionBeans;
     }

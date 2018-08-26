@@ -24,6 +24,8 @@ dependencies {
     compile 'com.alibaba:druid:1.0.29'
     compile 'commons-io:commons-io:2.4'
     compile 'com.alibaba:fastjson:1.2.49'
+    compile 'com.google.guava:guava:25.1-jre'
+    compile 'org.aspectj:aspectjweaver:1.8.13'
 
     mybatisGenerator 'org.mybatis.generator:mybatis-generator-core:1.3.5'
     mybatisGenerator 'mysql:mysql-connector-java:5.1.40'

@@ -1,6 +1,9 @@
 package com.wj.pms.controller;
 
 import com.wj.pms.common.Result;
+import com.wj.pms.common.enums.BusinessResponseCodeEnum;
+import com.wj.pms.common.exception.BaseException;
+import com.wj.pms.common.exception.ViewException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,9 +30,9 @@ public class UploadDownloadController {
     private String uploadDir;
 
     @RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
-    public Result uploadImage(@RequestParam(value = "file") MultipartFile file) throws RuntimeException {
+    public Result uploadImage(@RequestParam(value = "file") MultipartFile file) throws RuntimeException, BaseException {
         if (file.isEmpty()) {
-            return Result.fail("文件不能为空");
+            throw new ViewException(BusinessResponseCodeEnum.FILE_NAME_IS_NULL, file);
         }
         // 获取文件名
         String fileName = file.getOriginalFilename();

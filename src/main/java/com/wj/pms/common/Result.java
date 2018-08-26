@@ -1,132 +1,80 @@
 package com.wj.pms.common;
 
 
-import com.wj.pms.common.exception.PmsException;
+import com.wj.pms.common.enums.BaseResponseCodeEnum;
+import com.wj.pms.common.exception.BaseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
 
 /**
- * Created by gongjianfei on 2017/2/13.
+ *
  */
-public class Result {
-    private int code;
+public class Result implements Serializable{
+
+    private String code;
     private String message;
     private Object data;
 
-    public static int SUCCESS_CODE = 0;
+    private static String SUCCESS_CODE = BaseResponseCodeEnum.SUCCESS.getCode();
+    private static String SUCCESS_MESSAGE = BaseResponseCodeEnum.SUCCESS.getMessage();
 
-    public static int FAILED_CODE = -1;
-
-    public Result() {
-        super();
-    }
-
-    public Result(int code) {
-        super();
-        this.code = code;
-    }
-
-    public Result(int code, String message, Object data) {
+    public Result(String code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public Result(int code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-
-
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public Result setCode(String code) {
         this.code = code;
+        return this;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public Result setMessage(String message) {
         this.message = message;
+        return this;
     }
 
     public Object getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public Result setData(Object data) {
         this.data = data;
+        return this;
     }
 
-
     public static Result success(Object data) {
-        return new Result(SUCCESS_CODE, "OK", data);
+        return new Result(SUCCESS_CODE, SUCCESS_MESSAGE, data);
     }
 
     public static Result success() {
-        return new Result(SUCCESS_CODE, "OK");
+        return success(null);
     }
 
-    public static Result fail(PmsException e) {
-        return new Result(e.getErrorCode(), e.getMessage(), e.getData());
+    public static Result fail(String code, String message, Object data) {
+        return new Result(code, message, data) ;
     }
 
-    public static Result fail(Exception e) {
-        return new Result(FAILED_CODE, e.getClass().getCanonicalName(), e.getMessage());
+    public static Result fail(BaseException e) {
+        return fail(e.getCode(), e.getMessage(), e.getData());
     }
 
-    public static Result fail(String msg) {
-        return new Result(FAILED_CODE, msg);
-    }
-
-
-    public static Result buildSuccessResult() {
-        return buildSuccessResult("");
-    }
-
-    public static Result buildSuccessResult(Object data) {
-        return buildResult(0, "", data);
-    }
-
-    public static Result buildSuccessResult(int code, Object data) {
-        return buildResult(code, "", data);
-    }
-
-    public static Result buildFailResult(int code, String message) {
-        return buildResult(code, message, "");
-    }
-
-    public static Result buildResult(int code, String message, Object data) {
-        Result result = new Result(code);
-        result.setMessage(message);
-        result.setData(data);
-        return result;
-    }
-
-    public static Result buildFailResponse(HttpServletResponse response, Cookie cookie, int code, String message) {
+    public static Result buildResponse(HttpServletResponse response, Cookie cookie, String code, String message, Object data) {
         response.addCookie(cookie);
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON.toString());
-        return Result.buildFailResult(code, message);
-    }
-
-    public static Result buildFailResponse(HttpServletResponse response, int code, String message) {
-        response.setStatus(HttpStatus.OK.value());
-        response.setContentType(MediaType.APPLICATION_JSON.toString());
-        return Result.buildFailResult(code, message);
-    }
-
-    public static Result buildResponse(HttpServletResponse response, Cookie cookie, int code, String message, Object data) {
-        response.addCookie(cookie);
-        response.setStatus(HttpStatus.OK.value());
-        response.setContentType(MediaType.APPLICATION_JSON.toString());
-        return Result.buildResult(code, message, data);
+        return Result.fail(code, message, data);
     }
 }

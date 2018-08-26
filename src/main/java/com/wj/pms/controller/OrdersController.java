@@ -1,19 +1,15 @@
 package com.wj.pms.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.wj.pms.bean.PermissionBean;
 import com.wj.pms.common.Result;
 import com.wj.pms.mybatis.entity.Orders;
 import com.wj.pms.mybatis.entity.User;
 import com.wj.pms.mybatis.mapper.OrdersMapper;
 import com.wj.pms.service.PmsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
