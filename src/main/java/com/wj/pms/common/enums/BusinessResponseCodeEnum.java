@@ -9,8 +9,11 @@ package com.wj.pms.common.enums;
  * 18-8-26 下午11:24
  */
 public enum BusinessResponseCodeEnum {
-    USER_NOT_EXISTED("600001", "USER IS NOT EXISTED."),
-    FILE_NAME_IS_NULL("600002", "FILE NAME IS NULL");
+    USER_NOT_EXISTED("600001", "User is not existed."),
+    FILE_NAME_IS_NULL("600002", "File name is null."),
+    FILE_UPLOAD_FAILED("600003", "File upload failed."),
+    SECERT_INVALID("600004", "Password is invalid."),
+    USER_EXISTED("600005", "User has existed.");
 
     private String code;
     private String message;

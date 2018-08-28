@@ -58,7 +58,7 @@ public class UploadDownloadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Result.fail("文件上传失败");
+        return Result.fail(BusinessResponseCodeEnum.FILE_UPLOAD_FAILED, null);
     }
 
     //文件下载相关代码
@@ -129,7 +129,7 @@ public class UploadDownloadController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Result.fail("文件上传失败");
+            Result.fail(BusinessResponseCodeEnum.FILE_UPLOAD_FAILED, null);
         }
         return Result.success(result.toString());
     }

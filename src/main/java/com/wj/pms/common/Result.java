@@ -2,6 +2,7 @@ package com.wj.pms.common;
 
 
 import com.wj.pms.common.enums.BaseResponseCodeEnum;
+import com.wj.pms.common.enums.BusinessResponseCodeEnum;
 import com.wj.pms.common.exception.BaseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -76,5 +77,9 @@ public class Result implements Serializable{
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON.toString());
         return Result.fail(code, message, data);
+    }
+
+    public static Result fail(BusinessResponseCodeEnum enums, Object obj){
+        return fail(enums.getCode(), enums.getMessage(), null);
     }
 }

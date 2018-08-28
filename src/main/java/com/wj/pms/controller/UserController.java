@@ -1,7 +1,9 @@
 package com.wj.pms.controller;
 
-import com.wj.pms.common.exception.PmsException;
 import com.wj.pms.common.Result;
+import com.wj.pms.common.enums.BaseResponseCodeEnum;
+import com.wj.pms.common.enums.BusinessResponseCodeEnum;
+import com.wj.pms.common.exception.BusinessException;
 import com.wj.pms.mybatis.entity.User;
 import com.wj.pms.service.UserService;
 import org.slf4j.Logger;
@@ -30,16 +32,10 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private static final Result ERROR_RESULT = Result.buildFailResult(999999, "server error");
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public Result registerUser(@RequestBody User user) {
-        try {
-            userService.registerUser(user);
-        } catch (PmsException e) {
-            return Result.fail(e);
-        }
+    public Result registerUser(@RequestBody User user) throws BusinessException {
+        userService.registerUser(user);
         return Result.success();
     }
 
@@ -63,10 +59,10 @@ public class UserController {
     public Result signIn(@RequestBody User user, HttpSession session, HttpServletRequest request) {
         User enUser = userService.getUserByCode(user.getCode());
         if (enUser == null) {
-            return Result.buildResult(1002, "Couldn't find the user", null);
+            return Result.fail(BusinessResponseCodeEnum.USER_NOT_EXISTED, null);
         }
         if (!user.getPassword().equals(enUser.getPassword())) {
-            return Result.buildResult(1009, "password is invalid", null);
+            return Result.fail(BusinessResponseCodeEnum.SECERT_INVALID, null);
         }
         session.setAttribute("user", enUser);
 
@@ -87,6 +83,6 @@ public class UserController {
         User user = (User) session.getAttribute("user");
         session.removeAttribute("user");
 //        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登出：" + user.getDisplayName(), "", "", session);
-        return Result.buildResponse(response, null, 0, "logout success", null);
+        return Result.buildResponse(response, null, BaseResponseCodeEnum.SUCCESS.getCode(), "logout success", null);
     }
 }

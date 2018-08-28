@@ -1,7 +1,7 @@
 package com.wj.pms.service;
 
+import com.wj.pms.common.enums.BusinessResponseCodeEnum;
 import com.wj.pms.common.exception.BusinessException;
-import com.wj.pms.common.exception.PmsException;
 import com.wj.pms.mybatis.entity.User;
 import com.wj.pms.mybatis.mapper.UserMapper;
 import com.wj.pms.mybatis.mapper.self.PmsDao;
@@ -56,7 +56,7 @@ public class UserService implements UserDetailsService {
 
     public User registerUser(User user) throws BusinessException {
         if (getUserByCode(user.getCode()) != null) {
-            throw new BusinessException(1002, "user has existed");
+            throw new BusinessException(BusinessResponseCodeEnum.USER_EXISTED, null);
         }
         userMapper.insert(user);
         return pmsDao.selectUserByCode(user.getCode());
