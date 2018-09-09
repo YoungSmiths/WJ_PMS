@@ -41,7 +41,9 @@
         <!-- 要生成的表 -->
         <!-- 这里的百分号代表对该数据库中所有的表进行生成 -->
         <table tableName="%">
+<!--
             <generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/>
+-->
            <!-- <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         </table>
     </context>

@@ -7,5 +7,5 @@ package com.wj.pms.common;
  * 18-8-26 下午10:56
  */
 public interface Constants {
-
+//    String
 }

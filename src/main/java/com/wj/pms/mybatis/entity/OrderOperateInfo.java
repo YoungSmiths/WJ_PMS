@@ -2,12 +2,14 @@ package com.wj.pms.mybatis.entity;
 
 import java.util.Date;
 
-public class OrderState {
+public class OrderOperateInfo {
     private String id;
 
-    private String code;
+    private String orderid;
 
-    private String stateName;
+    private String actionCode;
+
+    private String actionName;
 
     private String state;
 
@@ -27,20 +29,28 @@ public class OrderState {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getCode() {
-        return code;
+    public String getOrderid() {
+        return orderid;
     }
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+    public void setOrderid(String orderid) {
+        this.orderid = orderid == null ? null : orderid.trim();
     }
 
-    public String getStateName() {
-        return stateName;
+    public String getActionCode() {
+        return actionCode;
     }
 
-    public void setStateName(String stateName) {
-        this.stateName = stateName == null ? null : stateName.trim();
+    public void setActionCode(String actionCode) {
+        this.actionCode = actionCode == null ? null : actionCode.trim();
+    }
+
+    public String getActionName() {
+        return actionName;
+    }
+
+    public void setActionName(String actionName) {
+        this.actionName = actionName == null ? null : actionName.trim();
     }
 
     public String getState() {

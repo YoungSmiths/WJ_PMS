@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.type.JdbcType;
 
@@ -20,27 +19,26 @@ public interface RouterInfoMapper {
 
     @Insert({
         "insert into router_info (id, code, ",
-        "next_state_code, state, ",
+        "next_code, state, ",
         "create_by, create_time, ",
         "update_by, update_time)",
         "values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, ",
-        "#{nextStateCode,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, ",
+        "#{nextCode,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, ",
         "#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
         "#{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})"
     })
-    @SelectKey(statement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual", keyProperty="id", before=true, resultType=String.class)
     int insert(RouterInfo record);
 
     @Select({
         "select",
-        "id, code, next_state_code, state, create_by, create_time, update_by, update_time",
+        "id, code, next_code, state, create_by, create_time, update_by, update_time",
         "from router_info",
         "where id = #{id,jdbcType=VARCHAR}"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
-        @Result(column="next_state_code", property="nextStateCode", jdbcType=JdbcType.VARCHAR),
+        @Result(column="next_code", property="nextCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_by", property="createBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
@@ -51,13 +49,13 @@ public interface RouterInfoMapper {
 
     @Select({
         "select",
-        "id, code, next_state_code, state, create_by, create_time, update_by, update_time",
+        "id, code, next_code, state, create_by, create_time, update_by, update_time",
         "from router_info"
     })
     @Results({
         @Result(column="id", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="code", property="code", jdbcType=JdbcType.VARCHAR),
-        @Result(column="next_state_code", property="nextStateCode", jdbcType=JdbcType.VARCHAR),
+        @Result(column="next_code", property="nextCode", jdbcType=JdbcType.VARCHAR),
         @Result(column="state", property="state", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_by", property="createBy", jdbcType=JdbcType.VARCHAR),
         @Result(column="create_time", property="createTime", jdbcType=JdbcType.TIMESTAMP),
@@ -69,7 +67,7 @@ public interface RouterInfoMapper {
     @Update({
         "update router_info",
         "set code = #{code,jdbcType=VARCHAR},",
-          "next_state_code = #{nextStateCode,jdbcType=VARCHAR},",
+          "next_code = #{nextCode,jdbcType=VARCHAR},",
           "state = #{state,jdbcType=VARCHAR},",
           "create_by = #{createBy,jdbcType=VARCHAR},",
           "create_time = #{createTime,jdbcType=TIMESTAMP},",

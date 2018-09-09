@@ -171,8 +171,8 @@ CREATE TABLE card_order
 CREATE TABLE router_info
 (
   id                VARCHAR(50) NOT NULL PRIMARY KEY ,
-  code              VARCHAR(100) NOT NULL UNIQUE ,
-  next_state_code   VARCHAR(100) NOT NULL UNIQUE ,
+  code              VARCHAR(100),
+  next_code         VARCHAR(100),
   state             VARCHAR(1),
   create_by         VARCHAR(255),
   create_time       DATETIME,
@@ -180,26 +180,27 @@ CREATE TABLE router_info
   update_time       DATETIME
 );
 
-CREATE TABLE order_state
+CREATE TABLE order_operate_info
 (
   id                VARCHAR(50) NOT NULL PRIMARY KEY ,
-  code              VARCHAR(100) NOT NULL UNIQUE ,
-  state_name        VARCHAR(100) NOT NULL UNIQUE ,
-  state             VARCHAR(1),
+  action_code       VARCHAR(100) NOT NULL ,
+  action_name       VARCHAR(100) NOT NULL ,
+  state             VARCHAR(50),
   create_by         VARCHAR(255),
   create_time       DATETIME,
   update_by         VARCHAR(255),
   update_time       DATETIME
 );
 
-CREATE TABLE order_operate_record
+CREATE TABLE base_directory
 (
   id                VARCHAR(50) NOT NULL PRIMARY KEY ,
-  operation_id      VARCHAR(50) NOT NULL UNIQUE ,
-  start_time        DATETIME,
-  end_time          DATETIME,
+  type              VARCHAR(50) NOT NULL ,
+  code              VARCHAR(50) NOT NULL ,
+  name              VARCHAR(200) NOT NULL ,
+  state             VARCHAR(10) DEFAULT '1',
   create_by         VARCHAR(2000),
   create_time       DATETIME,
   update_by         VARCHAR(2000),
   update_time       DATETIME
-);
+)

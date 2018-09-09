@@ -7,7 +7,7 @@ public class RouterInfo {
 
     private String code;
 
-    private String nextStateCode;
+    private String nextCode;
 
     private String state;
 
@@ -35,12 +35,12 @@ public class RouterInfo {
         this.code = code == null ? null : code.trim();
     }
 
-    public String getNextStateCode() {
-        return nextStateCode;
+    public String getNextCode() {
+        return nextCode;
     }
 
-    public void setNextStateCode(String nextStateCode) {
-        this.nextStateCode = nextStateCode == null ? null : nextStateCode.trim();
+    public void setNextCode(String nextCode) {
+        this.nextCode = nextCode == null ? null : nextCode.trim();
     }
 
     public String getState() {

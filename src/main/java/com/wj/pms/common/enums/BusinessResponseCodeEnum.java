@@ -13,7 +13,9 @@ public enum BusinessResponseCodeEnum {
     FILE_NAME_IS_NULL("600002", "File name is null."),
     FILE_UPLOAD_FAILED("600003", "File upload failed."),
     SECERT_INVALID("600004", "Password is invalid."),
-    USER_EXISTED("600005", "User has existed.");
+    USER_EXISTED("600005", "User has existed."),
+    ORDERS_HAS_EXISTED("500007", "order has existed.");
+
 
     private String code;
     private String message;

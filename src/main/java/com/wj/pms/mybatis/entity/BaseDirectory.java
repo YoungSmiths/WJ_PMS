@@ -2,12 +2,14 @@ package com.wj.pms.mybatis.entity;
 
 import java.util.Date;
 
-public class OrderStateRouter {
+public class BaseDirectory {
     private String id;
 
-    private String stateName;
+    private String type;
 
-    private String nextStateName;
+    private String code;
+
+    private String name;
 
     private String state;
 
@@ -27,20 +29,28 @@ public class OrderStateRouter {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getStateName() {
-        return stateName;
+    public String getType() {
+        return type;
     }
 
-    public void setStateName(String stateName) {
-        this.stateName = stateName == null ? null : stateName.trim();
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
-    public String getNextStateName() {
-        return nextStateName;
+    public String getCode() {
+        return code;
     }
 
-    public void setNextStateName(String nextStateName) {
-        this.nextStateName = nextStateName == null ? null : nextStateName.trim();
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getState() {
