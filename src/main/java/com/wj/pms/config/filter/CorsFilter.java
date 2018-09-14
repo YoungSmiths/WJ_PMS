@@ -14,8 +14,8 @@ import java.io.IOException;
  * @author YoungSmith
  * 18-9-9 下午1:57
  */
-@Component
-@WebFilter(urlPatterns = "/webapi/*", filterName = "authFilter")
+//@Component
+//@WebFilter(urlPatterns = "/webapi/*", filterName = "authFilter")
 public class CorsFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

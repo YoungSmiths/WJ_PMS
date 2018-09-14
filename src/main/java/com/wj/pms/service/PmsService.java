@@ -57,11 +57,11 @@ public class PmsService extends BaseService {
 
     public Orders insertOrUpdate(Orders orders) throws BaseException {
         if (Objects.isNull(orders.getId())) {
-            List<Orders> list = ordersMapper.selectAll().stream()
-                    .filter(orders1 -> orders1.getContractNo().equals(orders.getContractNo()))
-                    .collect(Collectors.toList());
-            if (list == null || list.size() > 0) {
-                throw new ViewException(BusinessResponseCodeEnum.ORDERS_HAS_EXISTED, orders);
+            List<Orders> list = ordersMapper.selectAll();
+            for(Orders o : list){
+                if(o.getContractNo().equals(orders.getContractNo()))
+                    throw new ViewException(BusinessResponseCodeEnum.ORDERS_HAS_EXISTED, orders);
+
             }
             orders.setState("01");
             orders.setId(generateID(null, null));

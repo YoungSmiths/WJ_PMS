@@ -320,11 +320,6 @@ public class DateUtil {
 
     }
 
-
-    public static void main(String[] args) {
-    }
-
-
     public static Timestamp getCurrentDateTime() {
         return new Timestamp(Instant.now().toEpochMilli());
 

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -20,6 +21,7 @@ import java.util.concurrent.ThreadFactory;
 @EnableScheduling
 @EnableAsync
 @MapperScan("com.wj.pms.mybatis.mapper")
+@EnableAspectJAutoProxy
 public class Application implements SchedulingConfigurer {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 

@@ -1,5 +1,6 @@
 package com.wj.pms.controller;
 
+import com.wj.pms.bean.UserBean;
 import com.wj.pms.common.Result;
 import com.wj.pms.common.exception.BaseException;
 import com.wj.pms.common.exception.BusinessException;
@@ -62,8 +63,8 @@ public class OrdersController {
     @GetMapping
     @ResponseBody
     public Result selectAll(HttpSession session){
-        User user = (User) session.getAttribute("user");
-        List<String> permitStates = pmsService.getPermitState(user);
+        UserBean user = (UserBean) session.getAttribute("user");
+        List<String> permitStates = pmsService.getPermitState(user.getUser());
         List<Orders> list = new ArrayList<>();
         for(String a : permitStates){
             list.addAll(pmsService.getOrders4User(a));

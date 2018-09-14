@@ -81,12 +81,9 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
 
-        User user1 = new User();
-        user1.setId(enUser.getId());
-        user1.setCode(enUser.getCode());
-        user1.setDisplayName(enUser.getDisplayName());
+        userBean.getUser().setPassword("");
 //        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登录：" + user.getDisplayName(), "", "", session);
-        return Result.success(user1);
+        return Result.success(userBean);
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
