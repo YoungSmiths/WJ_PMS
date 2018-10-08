@@ -1,6 +1,6 @@
 package com.wj.pms.mybatis.mapper.self;
 
-import com.wj.pms.mybatis.entity.Orders;
+import com.wj.pms.mybatis.entity.OrdersRelation;
 import com.wj.pms.mybatis.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,34 +15,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class BaseService {
 
     @Autowired
+    protected  UserManagerDao userManagerDao;
+
+    @Autowired
     protected PmsDao pmsDao;
 
     @Autowired
-    protected BaseDirectoryMapper baseDirectoryMapper;
+    protected BaseDirectoryInfoMapper baseDirectoryInfoMapper;
+
     @Autowired
-    protected BoxOrderMapper boxOrderMapper;
+    protected BoxOrdersInfoMapper boxOrdersInfoMapper;
+
     @Autowired
-    protected CardOrderMapper cardOrderMapper;
+    protected CardOrdersInfoMapper cardOrdersInfoMapper;
+
     @Autowired
-    protected DepartmentMapper departmentMapper;
+    protected DepartmentInfoMapper departmentInfoMapper;
+
     @Autowired
-    protected ExceptionMapper exceptionMapper;
+    protected ExceptionInfoMapper exceptionInfoMapper;
+
     @Autowired
-    protected OrderOperateInfoMapper orderOperateInfoMapper;
+    protected OrderInfoMapper orderInfoMapper;
+
     @Autowired
-    protected OrdersMapper ordersMapper;
+    protected OrderOperateRecordInfoMapper orderOperateRecordInfoMapper;
+
     @Autowired
-    protected PermissionMapper permissionMapper;
+    protected OrdersRelationMapper ordersRelationMapper;
+
     @Autowired
-    protected RoleMapper roleMapper;
+    protected PermissionInfoMapper permissionInfoMapper;
+
     @Autowired
-    protected RolePermissionMapper rolePermissionMapper;
+    protected RoleInfoMapper roleInfoMapper;
+
+    @Autowired
+    protected RolePermissionRelationMapper rolePermissionRelationMapper;
+
     @Autowired
     protected RouterInfoMapper routerInfoMapper;
+
     @Autowired
     protected UserDepartmentRelationMapper userDepartmentRelationMapper;
+
     @Autowired
-    protected UserMapper userMapper;
+    protected UserInfoMapper userInfoMapper;
+
     @Autowired
-    protected UserRoleMapper userRoleMapper;
+    protected UserRoleRelationMapper userRoleRelationMapper;
+
 }

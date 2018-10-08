@@ -8,4 +8,6 @@ package com.wj.pms.common;
  */
 public interface Constants {
 //    String
+    String SESSION_USER_KEY = "currentUser";
+    String EC_ORDER_SECRET_WRONG = "600011";
 }

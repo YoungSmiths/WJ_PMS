@@ -1,13 +1,17 @@
 package com.wj.pms.service;
 
+import com.wj.pms.bean.UserBean;
+import com.wj.pms.common.util.CheckUtil;
+import com.wj.pms.common.Constants;
+import com.wj.pms.common.util.SecretUtil;
+import com.wj.pms.common.util.SessionUtil;
 import com.wj.pms.common.enums.BusinessResponseCodeEnum;
 import com.wj.pms.common.exception.BusinessException;
-import com.wj.pms.mybatis.entity.User;
-import com.wj.pms.mybatis.mapper.UserMapper;
-import com.wj.pms.mybatis.mapper.self.PmsDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.wj.pms.mybatis.entity.DepartmentInfo;
+import com.wj.pms.mybatis.entity.PermissionInfo;
+import com.wj.pms.mybatis.entity.RoleInfo;
+import com.wj.pms.mybatis.entity.UserInfo;
+import com.wj.pms.mybatis.mapper.self.BaseService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,72 +21,54 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collection;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.util.*;
 
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService extends BaseService implements UserDetailsService {
 
-    private static final long serialVersionUID = 6581842760139277430L;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private PmsDao pmsDao;
-
-    public User getSystemAdmin() {
-        User system = getUserByCode("system");
+    @PostConstruct
+    public UserInfo getSystemAdmin() {
+        UserInfo system = getUserByCode("system");
         if (system == null) {
             synchronized (this) {
                 system = getUserByCode("system");
                 if (system == null) {
-                    system = new User();
+                    system = new UserInfo();
                     system.setDisplayName("系统管理员");
-                    system.setPassword("system");
-                    system.setMobile("13718450920");
+                    system.setSecret("123456");
+                    system.setPhone("13718450920");
                     system.setQq("1347908776");
-                    system.setState("1");
-                    system.setWeChat("13718450920");
-                    userMapper.insert(system);
+                    system.setState(true);
+                    userInfoMapper.insert(system);
                 }
             }
         }
-        return pmsDao.selectUserByCode("system");
+        return userManagerDao.selectUserByCode("system");
     }
 
-    public User registerUser(User user) throws BusinessException {
+    public UserInfo registerUser(UserInfo user) throws BusinessException {
         if (getUserByCode(user.getCode()) != null) {
             throw new BusinessException(BusinessResponseCodeEnum.USER_EXISTED, null);
         }
-        userMapper.insert(user);
-        return pmsDao.selectUserByCode(user.getCode());
+        userInfoMapper.insert(user);
+        return userManagerDao.selectUserByCode(user.getCode());
     }
 
-    public boolean isUserExisted(String userName) {
-        try {
-            User user = pmsDao.selectUserByCode(userName);
-            return user != null;
-        } catch (Exception e) {
-            LOGGER.error("Service: isUserExisted({}) error {}", userName, e);
-            return false;
-        }
-    }
-
-    public User getUserByCode(String code) {
-        return pmsDao.selectUserByCode(code);
+    public UserInfo getUserByCode(String code) {
+        return userManagerDao.selectUserByCode(code);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = getUserByCode(username);
+        UserInfo user = getUserByCode(username);
         if (user == null) {
             throw new UsernameNotFoundException("Username " + username + " not found.");
         }
-        final User authenticatedUser = user;
+        final UserInfo authenticatedUser = user;
         return new UserDetails() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -91,7 +77,7 @@ public class UserService implements UserDetailsService {
 
             @Override
             public String getPassword() {
-                return authenticatedUser.getPassword();
+                return authenticatedUser.getSecret();
             }
 
             @Override
@@ -121,12 +107,45 @@ public class UserService implements UserDetailsService {
         };
     }
 
-    public User getCurrentUser() {
+    public UserInfo getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getName() != null) {
             return getUserByCode(auth.getName());
         }
         return null;
+    }
+
+    public UserBean getUserBean(UserInfo enUser) {
+        DepartmentInfo department = userManagerDao.selectDepartment(enUser.getCode());
+        List<RoleInfo> roles = userManagerDao.selectRoles(enUser.getCode());
+        List<PermissionInfo> permissions = userManagerDao.getUserPermissions(enUser);
+        Map<String, Object> map = new HashMap<>();
+        // TODO permissions ---> map
+        UserBean userBean = new UserBean(enUser, department, roles, permissions);
+        return userBean;
+    }
+
+    public void resetSecret(HttpSession session, String orderSecret, String newSecret) {
+        UserBean userBean = (UserBean) SessionUtil.getAttr(session, Constants.SESSION_USER_KEY);
+        BigDecimal id = userBean.getUser().getId();
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(id);
+        CheckUtil.checkObjNull(userInfo);
+        if(!userInfo.getSecret().equals(SecretUtil.encriptSecret(orderSecret))){
+            throw new BusinessException(Constants.EC_ORDER_SECRET_WRONG, "老密码错误", null);
+        } else {
+            userInfo.setSecret(SecretUtil.encriptSecret(newSecret));
+            userInfoMapper.updateByPrimaryKey(userInfo);
+        }
+    }
+
+    public void deleteUser(BigDecimal id) {
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(id);
+        userInfo.setState(false);
+        userInfoMapper.updateByPrimaryKey(userInfo);
+    }
+
+    public void updateUser(UserInfo user) {
+        userInfoMapper.updateByPrimaryKey(user);
     }
 }
 

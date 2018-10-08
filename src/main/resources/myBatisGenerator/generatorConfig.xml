@@ -40,11 +40,23 @@
 
         <!-- 要生成的表 -->
         <!-- 这里的百分号代表对该数据库中所有的表进行生成 -->
-        <table tableName="%">
-<!--
-            <generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/>
--->
-           <!-- <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-        </table>
+    <!--    <table tableName="base_directory_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="box_orders_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="card_orders_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="department_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="exception_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="orders_relation"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="permission_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="role_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="role_permission_relation"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="router_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="user_department_relation"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="user_role_relation"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+        <table tableName="order_operate_record_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/> </table>
+        <table tableName="user_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+       -->
+        <table tableName="order_info"><generatedKey column="id" sqlStatement="select CONCAT(DATE_FORMAT(NOW(),'%Y%m%d%H%i%s'), floor(RAND() *100000))  from dual" identity="false"/></table>
+
     </context>
+
 </generatorConfiguration>

@@ -1,15 +1,16 @@
 package com.wj.pms.mybatis.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class RouterInfo {
-    private String id;
+    private BigDecimal id;
 
     private String code;
 
     private String nextCode;
 
-    private String state;
+    private Boolean state;
 
     private String createBy;
 
@@ -19,12 +20,12 @@ public class RouterInfo {
 
     private Date updateTime;
 
-    public String getId() {
+    public BigDecimal getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(BigDecimal id) {
+        this.id = id;
     }
 
     public String getCode() {
@@ -43,12 +44,12 @@ public class RouterInfo {
         this.nextCode = nextCode == null ? null : nextCode.trim();
     }
 
-    public String getState() {
+    public Boolean getState() {
         return state;
     }
 
-    public void setState(String state) {
-        this.state = state == null ? null : state.trim();
+    public void setState(Boolean state) {
+        this.state = state;
     }
 
     public String getCreateBy() {

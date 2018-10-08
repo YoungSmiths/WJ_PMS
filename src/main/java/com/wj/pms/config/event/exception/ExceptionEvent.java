@@ -1,7 +1,5 @@
 package com.wj.pms.config.event.exception;
 
-import com.wj.pms.mybatis.entity.Exception;
-
 public class ExceptionEvent {
 	 	private final Exception exception;
 	    public ExceptionEvent(Exception exception) {

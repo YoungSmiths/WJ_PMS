@@ -1,19 +1,22 @@
 package com.wj.pms.controller;
 
+import com.wj.pms.bean.OrderDetails;
 import com.wj.pms.bean.UserBean;
+import com.wj.pms.common.BaseController;
+import com.wj.pms.common.BeanUtil;
 import com.wj.pms.common.Result;
+import com.wj.pms.common.UserUtil;
 import com.wj.pms.common.exception.BaseException;
 import com.wj.pms.common.exception.BusinessException;
-import com.wj.pms.mybatis.entity.*;
-import com.wj.pms.mybatis.mapper.BoxOrderMapper;
-import com.wj.pms.mybatis.mapper.CardOrderMapper;
-import com.wj.pms.mybatis.mapper.OrdersMapper;
-import com.wj.pms.service.PmsService;
+import com.wj.pms.mybatis.entity.BoxOrdersInfo;
+import com.wj.pms.mybatis.entity.CardOrdersInfo;
+import com.wj.pms.mybatis.entity.OrderInfo;
+import com.wj.pms.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,122 +29,68 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/api/orders")
-public class OrdersController {
+public class OrdersController extends BaseController {
 
     @Autowired
-    private OrdersMapper ordersMapper;
+    private OrderService orderService;
 
-    @Autowired
-    private BoxOrderMapper boxOrderMapper;
-
-    @Autowired
-    private CardOrderMapper cardOrderMapper;
-
-    @Autowired
-    private PmsService pmsService;
-
-    @PostMapping
+    /**
+     * 插入订单基本信息
+     * @param baseOrderInfo
+     * @return
+     * @throws BaseException
+     */
+    @PostMapping("insertOrUpdateBaseOrder")
     @ResponseBody
-    public Result insertOrUpdate(@RequestBody Orders orders) throws BaseException {
-        return Result.success(pmsService.insertOrUpdate(orders));
+    public Result insertOrUpdate(@RequestBody OrderInfo baseOrderInfo) throws BaseException {
+        OrderInfo info = new OrderInfo();
+        BeanUtil.copyProperties(baseOrderInfo, info);
+        com.wj.pms.mybatis.entity.OrderInfo ret = orderService.insertOrUpdate(info);
+        return Result.success(ret);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseBody
-    public Result delete(@PathVariable String id){
-        if(Objects.nonNull(ordersMapper.selectByPrimaryKey(id)))
-            ordersMapper.deleteByPrimaryKey(id);
-        return Result.success();
-    }
-
+    /**
+     *  查询父订单信息
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     @ResponseBody
-    public Result select(@PathVariable String id){
-        return Result.success(ordersMapper.selectByPrimaryKey(id));
+    public Result select(@PathVariable BigDecimal id){
+        return Result.success(orderInfoMapper.selectByPrimaryKey(id));
     }
 
+    /**
+     * 查询用户所有权下父订单信息列表
+     * @param orderInfo
+     * @param session
+     * @return
+     */
     @GetMapping
     @ResponseBody
-    public Result selectAll(HttpSession session){
+    public Result selectAll(@RequestBody OrderInfo orderInfo, HttpSession session){
         UserBean user = (UserBean) session.getAttribute("user");
-        List<String> permitStates = pmsService.getPermitState(user.getUser());
-        List<Orders> list = new ArrayList<>();
+        List<String> permitStates = UserUtil.getUserAllowStates(user);
+        // todo 后续优化代码
+        List<OrderInfo> list = new ArrayList<>();
         for(String a : permitStates){
-            list.addAll(pmsService.getOrders4User(a));
+            if(a.equals(orderInfo.getStatus()))
+                list.addAll(orderService.getOrders4User(orderInfo));
         }
         return Result.success(list);
     }
 
-    @GetMapping("/{orderId}/moreOperation")
+    @PostMapping("/{parentId}/orderDetails")
     @ResponseBody
-    public Result moreOperation(@PathVariable String orderId, HttpSession session){
-        return Result.success(pmsService.moreOperation(orderId, session));
-    }
-
-    /**
-     *
-     {
-     "orderid":"2018081916485481851",
-     "actionCode":"02",
-     "actionName":"设计图纸"
-     }
-     * @param orderId
-     * @param orderOperateInfo
-     * @return
-     */
-    @PostMapping("/{orderId}/start")
-    @ResponseBody
-    public Result startOperate(@PathVariable String orderId, @RequestBody OrderOperateInfo orderOperateInfo){
-        pmsService.startOperate(orderId, orderOperateInfo);
-        return Result.success();
-    }
-
-    /**
-     *
-     * @param orderId
-     * @param orderOperateInfoId
-     * @return
-     */
-    @GetMapping("/{orderId}/end")
-    @ResponseBody
-    public Result endOperate(@PathVariable String orderId, @RequestParam String orderOperateInfoId){
-        pmsService.endOperate(orderId, orderOperateInfoId);
-        return Result.success();
-    }
-
-    @GetMapping("/{id}/history")
-    @ResponseBody
-    public Result getOrderHistory(@PathVariable String id){
-        return Result.success(pmsService.getOrderHistory(id));
-    }
-
-    @PostMapping("/{parentId}/children/card")
-    @ResponseBody
-    public Result insertOrUpdatePuke(@PathVariable String parentId, @RequestBody CardOrder cardOrder) throws BusinessException {
-        if(StringUtils.isEmpty(cardOrder.getParentOrderId()))
-            cardOrder.setParentOrderId(parentId);
-        return Result.success(pmsService.insertOrUpdatePuke(cardOrder));
-    }
-
-    @DeleteMapping("/{parentId}/children/card/{childId}")
-    @ResponseBody
-    public Result deleteCard(@PathVariable String parentId, @PathVariable String childId){
-        cardOrderMapper.deleteByPrimaryKey(childId);
-        return Result.success();
-    }
-
-    @PostMapping("/{parentId}/children/box")
-    @ResponseBody
-    public Result insertOrUpdateBox(@PathVariable String parentId, @RequestBody BoxOrder boxOrder) throws BusinessException {
-        if(StringUtils.isEmpty(boxOrder.getParentOrderId()))
-            boxOrder.setParentOrderId(parentId);
-        return Result.success(pmsService.insertOrUpdateBox(boxOrder));
-    }
-
-    @DeleteMapping("/{parentId}/children/box/{childId}")
-    @ResponseBody
-    public Result deleteBox(@PathVariable String parentId, @PathVariable String childId){
-        boxOrderMapper.deleteByPrimaryKey(childId);
+    public Result insertOrderDetail(@PathVariable String parentId, @RequestBody OrderDetails orderDetails) throws BusinessException {
+        OrderInfo orderInfo = orderDetails.getOrderInfo();
+        BoxOrdersInfo boxOrdersInfo = orderDetails.getBoxOrdersInfo();
+        CardOrdersInfo fCardOrdersInfo = orderDetails.getFCardOrdersInfo();
+        CardOrdersInfo zCardOrdersInfo = orderDetails.getZCardOrdersInfo();
+        OrderInfo orderInfo1 = orderService.insertOrUpdate(orderInfo);
+        orderService.insertOrUpdateBox(orderInfo1.getId(), boxOrdersInfo);
+        orderService.insertOrUpdatePuke(orderInfo1.getId(), fCardOrdersInfo);
+        orderService.insertOrUpdatePuke(orderInfo1.getId(), zCardOrdersInfo);
         return Result.success();
     }
 

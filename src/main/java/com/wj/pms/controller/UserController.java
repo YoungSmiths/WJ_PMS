@@ -1,15 +1,12 @@
 package com.wj.pms.controller;
 
 import com.wj.pms.bean.UserBean;
+import com.wj.pms.common.Constants;
 import com.wj.pms.common.Result;
 import com.wj.pms.common.enums.BaseResponseCodeEnum;
 import com.wj.pms.common.enums.BusinessResponseCodeEnum;
-import com.wj.pms.common.exception.BusinessException;
-import com.wj.pms.mybatis.entity.User;
-import com.wj.pms.mybatis.entity.UserDepartmentRelation;
-import com.wj.pms.mybatis.mapper.DepartmentMapper;
-import com.wj.pms.mybatis.mapper.UserMapper;
-import com.wj.pms.service.PmsService;
+import com.wj.pms.common.util.SessionUtil;
+import com.wj.pms.mybatis.entity.UserInfo;
 import com.wj.pms.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -40,20 +35,25 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private PmsService pmsService;
-
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public Result registerUser(@RequestBody User user) throws BusinessException {
+    public Result registerUser(@RequestBody UserInfo user){
         userService.registerUser(user);
+        return Result.success();
+    }
+
+    @PutMapping(value = "/editUser/{id}")
+    @ResponseBody
+    public Result updateUser(@PathVariable("id") BigDecimal id, @RequestBody UserInfo user){
+        user.setId(id);
+        userService.updateUser(user);
         return Result.success();
     }
 
     @RequestMapping(value = "/current", method = RequestMethod.GET)
     @ResponseBody
     public Result currentUser(HttpSession session) {
-        UserBean user = (UserBean) session.getAttribute("user");
+        UserBean user = (UserBean) session.getAttribute(Constants.SESSION_USER_KEY);
         if (user != null) {
             return Result.success(user);
         } else {
@@ -63,33 +63,46 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Result signIn(@RequestBody User user, HttpSession session, HttpServletRequest request) {
-        User enUser = userService.getUserByCode(user.getCode());
+    public Result signIn(@RequestBody UserInfo user, HttpSession session, HttpServletRequest request) {
+        UserInfo enUser = userService.getUserByCode(user.getCode());
         if (enUser == null) {
             return Result.fail(BusinessResponseCodeEnum.USER_NOT_EXISTED, null);
         }
-        if (!user.getPassword().equals(enUser.getPassword())) {
+        if (!user.getSecret().equals(enUser.getSecret())) {
             return Result.fail(BusinessResponseCodeEnum.SECERT_INVALID, null);
         }
 
-        UserBean userBean = pmsService.getUserBean(enUser);
-        session.setAttribute("user", userBean);
+        UserBean userBean = userService.getUserBean(enUser);
+        SessionUtil.setAttr(session, Constants.SESSION_USER_KEY, userBean);
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getCode(), user.getPassword());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getCode(), user.getSecret());
         token.setDetails(new WebAuthenticationDetails(request));
         Authentication auth = authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-
-        userBean.getUser().setPassword("");
-//        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登录：" + user.getDisplayName(), "", "", session);
+        userBean.getUser().setSecret("");
         return Result.success(userBean);
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public Result signOut(@RequestBody Map<String, Object> jsonObject, HttpSession session, HttpServletResponse response) {
-        session.removeAttribute("user");
-//        LogUtil.log(uors,new Date(), false, new Date(), LogUtil.LOGTYPE.LOGIN.name(), "登出：" + user.getDisplayName(), "", "", session);
+    @GetMapping(value = "/logout")
+    @ResponseBody
+    public Result signOut(HttpSession session, HttpServletResponse response) {
+        session.removeAttribute(Constants.SESSION_USER_KEY);
         return Result.buildResponse(response, null, BaseResponseCodeEnum.SUCCESS.getCode(), "logout success", null);
+    }
+
+    @PostMapping("resetSecret")
+    @ResponseBody
+    public Result resetSecret(HttpSession session, @RequestBody Map<String, String> map){
+        String orderSecret = map.get("orderSecret");
+        String newSecret = map.get("newSecret");
+        userService.resetSecret(session, orderSecret, newSecret);
+        return Result.success();
+    }
+
+    @DeleteMapping("delete/{id}")
+    public Result deleteUser(HttpSession session, @PathVariable("id") BigDecimal id){
+        userService.deleteUser(id);
+        return Result.success();
     }
 }

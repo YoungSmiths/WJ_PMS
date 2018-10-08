@@ -1,8 +1,9 @@
 package com.wj.pms.bean;
 
-import com.wj.pms.mybatis.entity.Department;
-import com.wj.pms.mybatis.entity.Role;
-import com.wj.pms.mybatis.entity.User;
+import com.wj.pms.mybatis.entity.DepartmentInfo;
+import com.wj.pms.mybatis.entity.PermissionInfo;
+import com.wj.pms.mybatis.entity.RoleInfo;
+import com.wj.pms.mybatis.entity.UserInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -14,12 +15,12 @@ import java.util.Map;
  * 18-9-2 下午8:16
  */
 public class UserBean {
-    private User user;
-    private Department department;
-    private List<Role> roles;
-    private Map<String, Object> permissions;
+    private UserInfo user;
+    private DepartmentInfo department;
+    private List<RoleInfo> roles;
+    private List<PermissionInfo> permissions;
 
-    public UserBean(User user, Department department, List<Role> roles, Map<String, Object> permissions) {
+    public UserBean(UserInfo user, DepartmentInfo department, List<RoleInfo> roles, List<PermissionInfo> permissions) {
         this.user = user;
         this.department = department;
         this.roles = roles;
@@ -30,38 +31,38 @@ public class UserBean {
 
     }
 
-    public User getUser() {
+    public UserInfo getUser() {
         return user;
     }
 
-    public UserBean setUser(User user) {
+    public UserBean setUser(UserInfo user) {
         this.user = user;
         return this;
     }
 
-    public Department getDepartment() {
+    public DepartmentInfo getDepartment() {
         return department;
     }
 
-    public UserBean setDepartment(Department department) {
+    public UserBean setDepartment(DepartmentInfo department) {
         this.department = department;
         return this;
     }
 
-    public List<Role> getRoles() {
+    public List<RoleInfo> getRoles() {
         return roles;
     }
 
-    public UserBean setRoles(List<Role> roles) {
+    public UserBean setRoles(List<RoleInfo> roles) {
         this.roles = roles;
         return this;
     }
 
-    public Map<String, Object> getPermissions() {
+    public List<PermissionInfo> getPermissions() {
         return permissions;
     }
 
-    public UserBean setPermissions(Map<String, Object> permissions) {
+    public UserBean setPermissions(List<PermissionInfo> permissions) {
         this.permissions = permissions;
         return this;
     }

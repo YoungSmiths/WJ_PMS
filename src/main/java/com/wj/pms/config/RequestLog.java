@@ -1,7 +1,6 @@
 package com.wj.pms.config;
 
 import com.alibaba.fastjson.JSONObject;
-import com.wj.pms.common.LogUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;

@@ -1,13 +1,16 @@
 package com.wj.pms.mybatis.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class UserDepartmentRelation {
-    private String id;
+    private BigDecimal id;
 
-    private String userId;
+    private BigDecimal uesrId;
 
-    private String departmentId;
+    private BigDecimal departmentId;
+
+    private Boolean state;
 
     private String createBy;
 
@@ -17,28 +20,36 @@ public class UserDepartmentRelation {
 
     private Date updateTime;
 
-    public String getId() {
+    public BigDecimal getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(BigDecimal id) {
+        this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
+    public BigDecimal getUesrId() {
+        return uesrId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUesrId(BigDecimal uesrId) {
+        this.uesrId = uesrId;
     }
 
-    public String getDepartmentId() {
+    public BigDecimal getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId == null ? null : departmentId.trim();
+    public void setDepartmentId(BigDecimal departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public Boolean getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
     }
 
     public String getCreateBy() {

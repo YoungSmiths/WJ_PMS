@@ -9,7 +9,7 @@ import com.wj.pms.common.enums.BusinessResponseCodeEnum;
  * @author YoungSmith
  * 18-8-26 下午10:50
  */
-public class BaseException extends Exception{
+public class BaseException extends RuntimeException{
     private String code;
     private String message;
     private Object data;
