@@ -68,6 +68,7 @@ Top=226.00</GraphDesc>
   <OrderNo>1</OrderNo>
   <DisplayName>编号</DisplayName>
   <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
   <Nullable>0</Nullable>
   <DataLength>32</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
@@ -465,7 +466,7 @@ Top=710.00</GraphDesc>
 
 
 <DataModels_item1_item0_item3_item0>
-  <Count>19</Count>
+  <Count>24</Count>
 </DataModels_item1_item0_item3_item0>
 
 
@@ -507,7 +508,7 @@ Horz2=1</GraphDesc>
   <DisplayName>订单名称</DisplayName>
   <DataType>1</DataType>
   <RelateTable>order_operate_record_info</RelateTable>
-  <Nullable>1</Nullable>
+  <Nullable>0</Nullable>
   <DataLength>100</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -552,15 +553,15 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item5>
   <CTVER>43543230</CTVER>
-  <ID>21</ID>
-  <Name>count</Name>
-  <CreateDate>2018/7/20 6:54:21</CreateDate>
+  <ID>22</ID>
+  <Name>edition</Name>
+  <CreateDate>2018/10/8 23:23:58</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>5</OrderNo>
-  <DisplayName>数量</DisplayName>
-  <DataType>2</DataType>
-  <RelateTable>order_operate_record_info</RelateTable>
+  <DisplayName>版次</DisplayName>
+  <DataType>1</DataType>
   <Nullable>1</Nullable>
+  <DataLength>200</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item3_item0_item5>
@@ -568,15 +569,15 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item6>
   <CTVER>43543230</CTVER>
-  <ID>25</ID>
-  <Name>paper_type</Name>
-  <CreateDate>2018/10/2 10:34:52</CreateDate>
+  <ID>20</ID>
+  <Name>customer</Name>
+  <CreateDate>2018/10/8 23:22:55</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>6</OrderNo>
-  <DisplayName>纸张类型</DisplayName>
+  <DisplayName>客户联系人</DisplayName>
   <DataType>1</DataType>
   <Nullable>1</Nullable>
-  <DataLength>500</DataLength>
+  <DataLength>100</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item3_item0_item6>
@@ -585,13 +586,12 @@ Horz2=1</GraphDesc>
 <DataModels_item1_item0_item3_item0_item7>
   <CTVER>43543230</CTVER>
   <ID>23</ID>
-  <Name>width</Name>
-  <CreateDate>2018/7/20 6:54:21</CreateDate>
+  <Name>product_name</Name>
+  <CreateDate>2018/10/8 23:24:38</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>7</OrderNo>
-  <DisplayName>扑克宽度</DisplayName>
+  <DisplayName>产品名称</DisplayName>
   <DataType>1</DataType>
-  <RelateTable>order_operate_record_info</RelateTable>
   <Nullable>1</Nullable>
   <DataLength>500</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
@@ -601,16 +601,14 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item8>
   <CTVER>43543230</CTVER>
-  <ID>24</ID>
-  <Name>lengths</Name>
-  <CreateDate>2018/7/20 6:54:21</CreateDate>
+  <ID>21</ID>
+  <Name>order_start_date</Name>
+  <CreateDate>2018/10/8 23:23:29</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>8</OrderNo>
-  <DisplayName>扑克长度</DisplayName>
-  <DataType>1</DataType>
-  <RelateTable>order_operate_record_info</RelateTable>
+  <DisplayName>下单日期</DisplayName>
+  <DataType>4</DataType>
   <Nullable>1</Nullable>
-  <DataLength>500</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item3_item0_item8>
@@ -618,16 +616,14 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item9>
   <CTVER>43543230</CTVER>
-  <ID>25</ID>
-  <Name>print_require</Name>
-  <CreateDate>2018/7/20 6:54:21</CreateDate>
+  <ID>24</ID>
+  <Name>dead_line</Name>
+  <CreateDate>2018/10/8 23:25:02</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>9</OrderNo>
-  <DisplayName>打印要求</DisplayName>
-  <DataType>1</DataType>
-  <RelateTable>order_operate_record_info</RelateTable>
+  <DisplayName>交货日期</DisplayName>
+  <DataType>4</DataType>
   <Nullable>1</Nullable>
-  <DataLength>1000</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item3_item0_item9>
@@ -635,15 +631,15 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item10>
   <CTVER>43543230</CTVER>
-  <ID>26</ID>
-  <Name>out_side_handler</Name>
-  <CreateDate>2018/10/2 11:39:19</CreateDate>
+  <ID>21</ID>
+  <Name>count</Name>
+  <CreateDate>2018/7/20 6:54:21</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>10</OrderNo>
-  <DisplayName>表面处理</DisplayName>
-  <DataType>1</DataType>
+  <DisplayName>数量</DisplayName>
+  <DataType>2</DataType>
+  <RelateTable>order_operate_record_info</RelateTable>
   <Nullable>1</Nullable>
-  <DataLength>1000</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item3_item0_item10>
@@ -651,16 +647,15 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item11>
   <CTVER>43543230</CTVER>
-  <ID>26</ID>
-  <Name>package_require</Name>
-  <CreateDate>2018/7/20 6:54:21</CreateDate>
+  <ID>25</ID>
+  <Name>paper_type</Name>
+  <CreateDate>2018/10/2 10:34:52</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>11</OrderNo>
-  <DisplayName>包装要求</DisplayName>
+  <DisplayName>纸张类型</DisplayName>
   <DataType>1</DataType>
-  <RelateTable>order_operate_record_info</RelateTable>
   <Nullable>1</Nullable>
-  <DataLength>1000</DataLength>
+  <DataLength>500</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item3_item0_item11>
@@ -668,16 +663,16 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item12>
   <CTVER>43543230</CTVER>
-  <ID>27</ID>
-  <Name>parts</Name>
+  <ID>23</ID>
+  <Name>width</Name>
   <CreateDate>2018/7/20 6:54:21</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>12</OrderNo>
-  <DisplayName>配件</DisplayName>
+  <DisplayName>扑克宽度</DisplayName>
   <DataType>1</DataType>
   <RelateTable>order_operate_record_info</RelateTable>
   <Nullable>1</Nullable>
-  <DataLength>1000</DataLength>
+  <DataLength>500</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item3_item0_item12>
@@ -685,16 +680,16 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item13>
   <CTVER>43543230</CTVER>
-  <ID>239</ID>
-  <Name>design_pic_path</Name>
-  <CreateDate>2018/7/22 11:48:58</CreateDate>
+  <ID>24</ID>
+  <Name>lengths</Name>
+  <CreateDate>2018/7/20 6:54:21</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>13</OrderNo>
-  <DisplayName>设计图地址</DisplayName>
+  <DisplayName>扑克长度</DisplayName>
   <DataType>1</DataType>
   <RelateTable>order_operate_record_info</RelateTable>
   <Nullable>1</Nullable>
-  <DataLength>1000</DataLength>
+  <DataLength>500</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item3_item0_item13>
@@ -702,12 +697,14 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item14>
   <CTVER>43543230</CTVER>
-  <ID>27</ID>
-  <Name>describe_info</Name>
-  <CreateDate>2018/10/2 11:40:12</CreateDate>
+  <ID>25</ID>
+  <Name>print_require</Name>
+  <CreateDate>2018/7/20 6:54:21</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>14</OrderNo>
+  <DisplayName>打印要求</DisplayName>
   <DataType>1</DataType>
+  <RelateTable>order_operate_record_info</RelateTable>
   <Nullable>1</Nullable>
   <DataLength>1000</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
@@ -717,11 +714,93 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item3_item0_item15>
   <CTVER>43543230</CTVER>
-  <ID>21</ID>
-  <Name>state</Name>
-  <CreateDate>2018/7/27 7:30:51</CreateDate>
+  <ID>26</ID>
+  <Name>out_side_handler</Name>
+  <CreateDate>2018/10/2 11:39:19</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>15</OrderNo>
+  <DisplayName>表面处理</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>1000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item15>
+
+
+<DataModels_item1_item0_item3_item0_item16>
+  <CTVER>43543230</CTVER>
+  <ID>26</ID>
+  <Name>package_require</Name>
+  <CreateDate>2018/7/20 6:54:21</CreateDate>
+  <ModifyDate>1899/12/30</ModifyDate>
+  <OrderNo>16</OrderNo>
+  <DisplayName>包装要求</DisplayName>
+  <DataType>1</DataType>
+  <RelateTable>order_operate_record_info</RelateTable>
+  <Nullable>1</Nullable>
+  <DataLength>1000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item16>
+
+
+<DataModels_item1_item0_item3_item0_item17>
+  <CTVER>43543230</CTVER>
+  <ID>27</ID>
+  <Name>parts</Name>
+  <CreateDate>2018/7/20 6:54:21</CreateDate>
+  <ModifyDate>1899/12/30</ModifyDate>
+  <OrderNo>17</OrderNo>
+  <DisplayName>配件</DisplayName>
+  <DataType>1</DataType>
+  <RelateTable>order_operate_record_info</RelateTable>
+  <Nullable>1</Nullable>
+  <DataLength>1000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item17>
+
+
+<DataModels_item1_item0_item3_item0_item18>
+  <CTVER>43543230</CTVER>
+  <ID>239</ID>
+  <Name>design_pic_path</Name>
+  <CreateDate>2018/7/22 11:48:58</CreateDate>
+  <ModifyDate>1899/12/30</ModifyDate>
+  <OrderNo>18</OrderNo>
+  <DisplayName>设计图地址</DisplayName>
+  <DataType>1</DataType>
+  <RelateTable>order_operate_record_info</RelateTable>
+  <Nullable>1</Nullable>
+  <DataLength>1000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item18>
+
+
+<DataModels_item1_item0_item3_item0_item19>
+  <CTVER>43543230</CTVER>
+  <ID>27</ID>
+  <Name>describe_info</Name>
+  <CreateDate>2018/10/2 11:40:12</CreateDate>
+  <ModifyDate>1899/12/30</ModifyDate>
+  <OrderNo>19</OrderNo>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>1000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item19>
+
+
+<DataModels_item1_item0_item3_item0_item20>
+  <CTVER>43543230</CTVER>
+  <ID>21</ID>
+  <Name>status</Name>
+  <CreateDate>2018/7/27 7:30:51</CreateDate>
+  <ModifyDate>1899/12/30</ModifyDate>
+  <OrderNo>20</OrderNo>
   <DisplayName>状态</DisplayName>
   <DataType>1</DataType>
   <Nullable>1</Nullable>
@@ -739,69 +818,69 @@ Mod_OP2=0
 Mod_CP=0
 Horz1=0
 Horz2=0</GraphDesc>
-</DataModels_item1_item0_item3_item0_item15>
+</DataModels_item1_item0_item3_item0_item20>
 
 
-<DataModels_item1_item0_item3_item0_item16>
+<DataModels_item1_item0_item3_item0_item21>
   <CTVER>43543230</CTVER>
   <ID>21</ID>
   <Name>create_by</Name>
   <CreateDate>2018/10/2 10:30:41</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
-  <OrderNo>16</OrderNo>
+  <OrderNo>21</OrderNo>
   <DisplayName>创建人</DisplayName>
   <DataType>1</DataType>
   <Nullable>1</Nullable>
   <DataLength>100</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
-</DataModels_item1_item0_item3_item0_item16>
+</DataModels_item1_item0_item3_item0_item21>
 
 
-<DataModels_item1_item0_item3_item0_item17>
+<DataModels_item1_item0_item3_item0_item22>
   <CTVER>43543230</CTVER>
   <ID>22</ID>
   <Name>create_time</Name>
   <CreateDate>2018/10/2 10:30:41</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
-  <OrderNo>17</OrderNo>
+  <OrderNo>22</OrderNo>
   <DisplayName>创建时间</DisplayName>
   <DataType>4</DataType>
   <Nullable>1</Nullable>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
-</DataModels_item1_item0_item3_item0_item17>
+</DataModels_item1_item0_item3_item0_item22>
 
 
-<DataModels_item1_item0_item3_item0_item18>
+<DataModels_item1_item0_item3_item0_item23>
   <CTVER>43543230</CTVER>
   <ID>23</ID>
   <Name>update_by</Name>
   <CreateDate>2018/10/2 10:30:41</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
-  <OrderNo>18</OrderNo>
+  <OrderNo>23</OrderNo>
   <DisplayName>更新人</DisplayName>
   <DataType>1</DataType>
   <Nullable>1</Nullable>
   <DataLength>100</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
-</DataModels_item1_item0_item3_item0_item18>
+</DataModels_item1_item0_item3_item0_item23>
 
 
-<DataModels_item1_item0_item3_item0_item19>
+<DataModels_item1_item0_item3_item0_item24>
   <CTVER>43543230</CTVER>
   <ID>24</ID>
   <Name>update_time</Name>
   <CreateDate>2018/10/2 10:30:41</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
-  <OrderNo>19</OrderNo>
+  <OrderNo>24</OrderNo>
   <DisplayName>更新时间</DisplayName>
   <DataType>4</DataType>
   <Nullable>1</Nullable>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
-</DataModels_item1_item0_item3_item0_item19>
+</DataModels_item1_item0_item3_item0_item24>
 
 
 <DataModels_item1_item0_item4>
@@ -861,7 +940,7 @@ Horz2=0</GraphDesc>
   <DisplayName>部门名称</DisplayName>
   <DataType>1</DataType>
   <RelateTable>order_operate_record_info</RelateTable>
-  <Nullable>1</Nullable>
+  <Nullable>0</Nullable>
   <DataLength>100</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -1011,7 +1090,7 @@ Top=714.00</GraphDesc>
   <DataType>1</DataType>
   <DataTypeName>VARCHAR</DataTypeName>
   <RelateTable>order_operate_record_info</RelateTable>
-  <Nullable>1</Nullable>
+  <Nullable>0</Nullable>
   <DataLength>50</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -1289,7 +1368,7 @@ Top=713.00</GraphDesc>
   <DataType>1</DataType>
   <DataTypeName>VARCHAR</DataTypeName>
   <RelateTable>order_operate_record_info</RelateTable>
-  <Nullable>1</Nullable>
+  <Nullable>0</Nullable>
   <DataLength>50</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -1578,7 +1657,7 @@ Horz2=0</GraphDesc>
   <DataType>1</DataType>
   <DataTypeName>VARCHAR</DataTypeName>
   <RelateTable>order_operate_record_info</RelateTable>
-  <Nullable>1</Nullable>
+  <Nullable>0</Nullable>
   <DataLength>100</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -1737,7 +1816,7 @@ Horz2=1</GraphDesc>
   <DataType>1</DataType>
   <DataTypeName>VARCHAR</DataTypeName>
   <RelateTable>order_operate_record_info</RelateTable>
-  <Nullable>1</Nullable>
+  <Nullable>0</Nullable>
   <DataLength>100</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -2121,6 +2200,7 @@ Top=449.00</GraphDesc>
   <DisplayName>订单ID</DisplayName>
   <DataType>2</DataType>
   <Nullable>1</Nullable>
+  <DataLength>32</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item10_item0_item4>
@@ -2542,7 +2622,7 @@ Top=-1.00</GraphDesc>
 <DataModels_item1_item0_item13_item0_item2>
   <CTVER>43543230</CTVER>
   <ID>2</ID>
-  <Name>uesr_id</Name>
+  <Name>user_id</Name>
   <CreateDate>2018/10/2 10:08:32</CreateDate>
   <ModifyDate>1899/12/30</ModifyDate>
   <OrderNo>2</OrderNo>
