@@ -1,0 +1,9 @@
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (1, '业务员', 'bussinessMonitor', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (2, '设计师', 'desigerMonitor', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (3, '财务员', 'financialMonitor', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (4, '计划部', 'planMonitor', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (5, '生产部', 'productMonitor', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (6, '印刷部长', 'printMonitor', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (7, '大印刷机长', 'bigMachine', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (8, '小印刷机长', 'smallMachine', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.role_info (id, role_name, role_code, state, create_by, create_time, update_by, update_time) VALUES (9, '外发部', 'outgoingMonitor', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');

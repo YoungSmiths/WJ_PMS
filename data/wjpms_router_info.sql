@@ -1,0 +1,12 @@
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (1, '01', '02', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (2, '02', '03', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (3, '03', '04', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (4, '04', '05', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (5, '05', '06', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (6, '06', '07', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (7, '07', '08', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (8, '08', '09', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (9, '09', '10', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (10, '10', '11', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (11, '11', '12', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
+INSERT INTO wjpms.router_info (id, code, next_code, state, create_by, create_time, update_by, update_time) VALUES (12, '12', '13', true, 'system', '2018-10-09 14:07:15', 'system', '2018-10-09 14:07:15');
