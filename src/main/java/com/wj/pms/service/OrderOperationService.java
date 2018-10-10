@@ -8,31 +8,74 @@ import com.wj.pms.mybatis.mapper.self.BaseService;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OrderOperationService extends BaseService {
 
-    public Object moreOperation(BigDecimal orderId, HttpSession session) {
-        String orderState = pmsDao.selectOrderState(orderId);
-        if (orderState.length() == 4) {
-            return orderOperateRecordInfoMapper.selectAll().stream()
-                    .filter(orderOperateInfo -> orderOperateInfo.getId().equals(orderId)
-                            && orderOperateInfo.getActionCode().equals(orderState))
-                    .collect(Collectors.toList()).get(0);
-        }
-//        if (orderState.length() == 3) {
-        Map<String, Object> map = new HashMap<>();
-        BaseDirectoryInfo orderOperateInfo = pmsDao.getOrderStateNextOperationName(orderId);
-        UserBean user = (UserBean) session.getAttribute("user");
-//            List<String> userCodes = pmsDao.getOperationPermitUser(orderOperateInfo.getState());
-        map.put("actionName", orderOperateInfo.getName());
-        map.put("actionCode", orderOperateInfo.getCode());
-        map.put("department", user.getDepartment());
-        map.put("user2Permit", user.getUser().getDisplayName());
-        return map;
+    public Object moreOperationParentOrder(BigDecimal orderId, HttpSession session) {
+
+        OrderInfo orderInfo = orderInfoMapper.selectByPrimaryKey(orderId);
+        String status = orderInfo.getStatus();
+        List<BaseDirectoryInfo> operationCode = getOperationCode(status);
+//
+//
+//
+//        String statusFlag = status.substring(2,4);
+//        if ("".equals(statusFlag)) {
+//            return orderOperateRecordInfoMapper.selectAll().stream()
+//                    .filter(orderOperateInfo -> orderOperateInfo.getId().equals(orderId)
+//                            && orderOperateInfo.getActionCode().equals(orderState))
+//                    .collect(Collectors.toList()).get(0);
 //        }
-//        return null;
+////        if (orderState.length() == 3) {
+//        Map<String, Object> map = new HashMap<>();
+//        BaseDirectoryInfo orderOperateInfo = pmsDao.getOrderStateNextOperationName(orderId);
+//        UserBean user = (UserBean) session.getAttribute("user");
+////            List<String> userCodes = pmsDao.getOperationPermitUser(orderOperateInfo.getState());
+//        map.put("actionName", orderOperateInfo.getName());
+//        map.put("actionCode", orderOperateInfo.getCode());
+//        map.put("department", user.getDepartment());
+//        map.put("user2Permit", user.getUser().getDisplayName());
+//        return map;
+////        }
+        return null;
+    }
+
+    /**
+     *  *00一般出现在订单拆分时
+     *  *03和**04状态的订单进入下一个操作
+     *  *05状态的订单会返回到上一步操作
+     *  @param status
+     *  @return
+     */
+    private List<BaseDirectoryInfo> getOperationCode(String status){
+        String currentOperation = status.substring(0,2);
+        String statusFlag = status.substring(2,4);
+        if("03".equals(statusFlag) || "04".equals(statusFlag)){
+            List<String> collect = routerInfoMapper.selectAll().stream()
+                    .filter(routerInfo -> routerInfo.getCode().equals(currentOperation))
+                    .map(routerInfo -> routerInfo.getCode())
+                    .collect(Collectors.toList());
+            List<BaseDirectoryInfo> collect1 = baseDirectoryInfoMapper.selectAll().stream()
+                    .filter(baseDirectoryInfo -> "OPERATION".equals(baseDirectoryInfo.getType()))
+                    .filter(baseDirectoryInfo -> collect.contains(baseDirectoryInfo.getCode()))
+                    .collect(Collectors.toList());
+            return collect1;
+        }
+        if("05".equals(statusFlag)){
+            List<String> collect = routerInfoMapper.selectAll().stream()
+                    .filter(routerInfo -> routerInfo.getNextCode().equals(currentOperation))
+                    .map(routerInfo -> routerInfo.getCode())
+                    .collect(Collectors.toList());
+            List<BaseDirectoryInfo> collect1 = baseDirectoryInfoMapper.selectAll().stream()
+                    .filter(baseDirectoryInfo -> "OPERATION".equals(baseDirectoryInfo.getType()))
+                    .filter(baseDirectoryInfo -> collect.contains(baseDirectoryInfo.getCode()))
+                    .collect(Collectors.toList());
+            return collect1;
+        }
+        return null;
     }
 
     public OrderOperateRecordInfo startOperate(BigDecimal orderId, OrderOperateRecordInfo orderOperateInfo) {
@@ -88,4 +131,6 @@ public class OrderOperationService extends BaseService {
         }
     }
 
+    public Object moreOperationChildrenOrder(BigDecimal orderId, BigDecimal childId, HttpSession session) {
+    }
 }

@@ -20,7 +20,7 @@ public class OrdersControllerTest {
 
     private static void testDesign(String orderId) {
         login("meisimeng", "123456");
-        String moreOperationUrl = host + "/api/orders/" + orderId + "/moreOperation";
+        String moreOperationUrl = host + "/api/orders/" + orderId + "/moreOperationParentOrder";
         String insertOrdersRet = HttpClientUtil.get2Str(moreOperationUrl);
         System.out.println("更多操作：" + insertOrdersRet);
 

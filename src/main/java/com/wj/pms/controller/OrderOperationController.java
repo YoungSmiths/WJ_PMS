@@ -19,8 +19,14 @@ public class OrderOperationController {
 
     @GetMapping("/{orderId}/moreOperation")
     @ResponseBody
-    public Result moreOperation(@PathVariable BigDecimal orderId, HttpSession session){
-        return Result.success(orderOperationService.moreOperation(orderId, session));
+    public Result moreOperationParentOrder(@PathVariable BigDecimal orderId, HttpSession session){
+        return Result.success(orderOperationService.moreOperationParentOrder(orderId, session));
+    }
+
+    @GetMapping("/{orderId}/moreOperation/{childId}")
+    @ResponseBody
+    public Result moreOperationChildOrder(@PathVariable BigDecimal orderId,@PathVariable BigDecimal childId, HttpSession session){
+        return Result.success(orderOperationService.moreOperationChildrenOrder(orderId, childId, session));
     }
 
     /**
