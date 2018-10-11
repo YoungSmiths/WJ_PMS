@@ -1,12 +1,18 @@
 package com.wj.pms.service;
 
+import com.wj.pms.bean.OperationBean;
 import com.wj.pms.bean.UserBean;
+import com.wj.pms.common.Constants;
 import com.wj.pms.common.util.PrimaryKeyUtil;
+import com.wj.pms.common.util.SessionUtil;
 import com.wj.pms.mybatis.entity.*;
 import com.wj.pms.mybatis.mapper.self.BaseService;
+import com.wj.pms.mybatis.mapper.self.OrderOperationRecordInfoMapperExt;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +20,65 @@ import java.util.stream.Collectors;
 
 public class OrderOperationService extends BaseService {
 
-    public Object moreOperationParentOrder(BigDecimal orderId, HttpSession session) {
+    @Autowired
+    private OrderOperationRecordInfoMapperExt orderOperationRecordInfoMapperExt;
+    public Map<String, Object> moreOperationOrder(BigDecimal orderId, String status, HttpSession session) {
 
-        OrderInfo orderInfo = orderInfoMapper.selectByPrimaryKey(orderId);
-        String status = orderInfo.getStatus();
-        List<BaseDirectoryInfo> operationCode = getOperationCode(status);
+        HashMap<String, Object> map = new HashMap<>();
+        UserBean userBean = (UserBean) SessionUtil.getAttr(session, Constants.SESSION_USER_KEY);
+        map.put("operatorName", userBean.getUser().getDisplayName());
+
+        String currentOperation = status.substring(0, 2);
+        String statusFlag = status.substring(2, 4);
+
+        if ("01".equals(statusFlag) || "02".equals(statusFlag)) {
+            List<OrderOperateRecordInfo> operateRecordInfos = orderOperationRecordInfoMapperExt.selectByOrderId(orderId);
+            OrderOperateRecordInfo info = operateRecordInfos.get(0);
+            map.put("actionCode", info.getActionCode());
+            map.put("actionName", info.getActionName());
+            map.put("orderId", info.getOrderId() + "");
+            map.put("operatorName", info.getCreateBy());
+            map.put("startTime", info.getCreateTime());
+            return map;
+        }
+
+        if ("03".equals(statusFlag) || "04".equals(statusFlag)) {
+            List<String> collect = routerInfoMapper.selectAll().stream()
+                    .filter(routerInfo -> routerInfo.getCode().equals(currentOperation))
+                    .map(routerInfo -> routerInfo.getCode())
+                    .collect(Collectors.toList());
+            List<BaseDirectoryInfo> collect1 = baseDirectoryInfoMapper.selectAll().stream()
+                    .filter(baseDirectoryInfo -> "OPERATION".equals(baseDirectoryInfo.getType()))
+                    .filter(baseDirectoryInfo -> collect.contains(baseDirectoryInfo.getCode()))
+                    .collect(Collectors.toList());
+            BaseDirectoryInfo baseDirectoryInfo = collect1.get(0);
+
+            map.put("actionCode", baseDirectoryInfo.getCode());
+            map.put("actionName", baseDirectoryInfo.getName());
+            map.put("orderId", orderId);
+            map.put("startTime", new Date());
+            return map;
+        }
+        if ("05".equals(statusFlag)) {
+            String code = routerInfoMapper.selectAll().stream().filter(routerInfo -> routerInfo.getCode().equals(status)) // 一个状态只对应一个操作
+                    .findFirst().get().getCode();
+            BaseDirectoryInfo baseDirectoryInfo1 = baseDirectoryInfoMapper.selectAll().stream().filter(baseDirectoryInfo -> "OPERATION".equals(baseDirectoryInfo.getType()))
+                    .filter(baseDirectoryInfo -> code.equals(baseDirectoryInfo.getCode())).findFirst().get();
+            map.put("actionCode", baseDirectoryInfo1.getCode());
+            map.put("actionName", baseDirectoryInfo1.getName());
+            map.put("orderId", orderId);
+            map.put("startTime", new Date());
+            return map;
+
+//            List<BaseDirectoryInfo> collect1 = baseDirectoryInfoMapper.selectAll().stream()
+//                    .filter(baseDirectoryInfo -> "OPERATION".equals(baseDirectoryInfo.getType()))
+//                    .filter(baseDirectoryInfo -> collect.contains(baseDirectoryInfo.getCode()))
+//                    .collect(Collectors.toList());
+//            return collect1;
+        }
+        return null;
+
+//        List<BaseDirectoryInfo> operationCode = getOperationCode(status);
 //
 //
 //
@@ -40,20 +100,20 @@ public class OrderOperationService extends BaseService {
 //        map.put("user2Permit", user.getUser().getDisplayName());
 //        return map;
 ////        }
-        return null;
     }
 
     /**
-     *  *00一般出现在订单拆分时
-     *  *03和**04状态的订单进入下一个操作
-     *  *05状态的订单会返回到上一步操作
-     *  @param status
-     *  @return
+     * *00一般出现在订单拆分时
+     * *03和**04状态的订单进入下一个操作
+     * *05状态的订单会返回到上一步操作
+     *
+     * @param status
+     * @return
      */
-    private List<BaseDirectoryInfo> getOperationCode(String status){
-        String currentOperation = status.substring(0,2);
-        String statusFlag = status.substring(2,4);
-        if("03".equals(statusFlag) || "04".equals(statusFlag)){
+    private List<BaseDirectoryInfo> getOperationCode(String status) {
+        String currentOperation = status.substring(0, 2);
+        String statusFlag = status.substring(2, 4);
+        if ("03".equals(statusFlag) || "04".equals(statusFlag)) {
             List<String> collect = routerInfoMapper.selectAll().stream()
                     .filter(routerInfo -> routerInfo.getCode().equals(currentOperation))
                     .map(routerInfo -> routerInfo.getCode())
@@ -64,7 +124,7 @@ public class OrderOperationService extends BaseService {
                     .collect(Collectors.toList());
             return collect1;
         }
-        if("05".equals(statusFlag)){
+        if ("05".equals(statusFlag)) {
             List<String> collect = routerInfoMapper.selectAll().stream()
                     .filter(routerInfo -> routerInfo.getNextCode().equals(currentOperation))
                     .map(routerInfo -> routerInfo.getCode())
@@ -78,59 +138,16 @@ public class OrderOperationService extends BaseService {
         return null;
     }
 
-    public OrderOperateRecordInfo startOperate(BigDecimal orderId, OrderOperateRecordInfo orderOperateInfo) {
-        RouterInfo routerInfoa = routerInfoMapper.selectAll().stream().filter(routerInfo -> orderOperateInfo.getActionCode().equals(routerInfo.getCode())).collect(Collectors.toList()).get(0);
-        orderOperateInfo.setActionCode("start");
-        orderOperateInfo.setActionName("开始操作");
-        orderOperateInfo.setId(PrimaryKeyUtil.generateID(null, null));
-        int insert = orderOperateRecordInfoMapper.insert(orderOperateInfo);
-        OrderInfo orders = orderInfoMapper.selectByPrimaryKey(orderId);
-        if(orders != null){
-            orders.setStatus(routerInfoa.getNextCode());
-            orderInfoMapper.updateByPrimaryKey(orders);
+    public OrderOperateRecordInfo insertOrUpdateOrderOperateRecordInfo(OrderOperateRecordInfo orderOperateRecordInfo) {
+        orderOperateRecordInfo.setUpdateTime(new Date());
+        if(orderOperateRecordInfo.getId() == null){
+            orderOperateRecordInfo.setCreateBy(orderOperateRecordInfo.getUpdateBy());
+            orderOperateRecordInfo.setCreateTime(orderOperateRecordInfo.getUpdateTime());
+            orderOperateRecordInfoMapper.insert(orderOperateRecordInfo);
+        } else {
+            orderOperateRecordInfoMapper.updateByPrimaryKey(orderOperateRecordInfo);
         }
-        BoxOrdersInfo boxOrder = boxOrdersInfoMapper.selectByPrimaryKey(orderId);
-        if(boxOrder != null){
-            boxOrder.setStatus(routerInfoa.getNextCode());
-            boxOrdersInfoMapper.updateByPrimaryKey(boxOrder);
-        }
-        CardOrdersInfo cardOrder = cardOrdersInfoMapper.selectByPrimaryKey(orderId);
-        if(cardOrder != null){
-            cardOrder.setStatus(routerInfoa.getNextCode());
-            cardOrdersInfoMapper.updateByPrimaryKey(cardOrder);
-        }
-        return orderOperateInfo;
+        return orderOperateRecordInfo;
     }
 
-    public void endOperate(BigDecimal orderId, BigDecimal orderOperateInfoId) {
-        OrderOperateRecordInfo orderOperateInfo = orderOperateRecordInfoMapper.selectByPrimaryKey(orderOperateInfoId);
-        orderOperateInfo.setActionCode("end");
-        orderOperateInfo.setOrderId(orderId);
-        orderOperateInfo.setId(PrimaryKeyUtil.generateID(null, null));
-        orderOperateRecordInfoMapper.insert(orderOperateInfo);
-
-        OrderInfo orders1 = orderInfoMapper.selectByPrimaryKey(orderId);
-        RouterInfo routerInfoa = routerInfoMapper.selectAll().stream()
-                .filter(routerInfo -> orders1.getStatus().equals(routerInfo.getCode()))
-                .collect(Collectors.toList()).get(0);
-
-        OrderInfo orders = orderInfoMapper.selectByPrimaryKey(orderId);
-        if(orders != null){
-            orders.setStatus(routerInfoa.getNextCode());
-            orderInfoMapper.updateByPrimaryKey(orders);
-        }
-        BoxOrdersInfo boxOrder = boxOrdersInfoMapper.selectByPrimaryKey(orderId);
-        if(boxOrder != null){
-            boxOrder.setStatus(routerInfoa.getNextCode());
-            boxOrdersInfoMapper.updateByPrimaryKey(boxOrder);
-        }
-        CardOrdersInfo cardOrder = cardOrdersInfoMapper.selectByPrimaryKey(orderId);
-        if(cardOrder != null){
-            cardOrder.setStatus(routerInfoa.getNextCode());
-            cardOrdersInfoMapper.updateByPrimaryKey(cardOrder);
-        }
-    }
-
-    public Object moreOperationChildrenOrder(BigDecimal orderId, BigDecimal childId, HttpSession session) {
-    }
 }

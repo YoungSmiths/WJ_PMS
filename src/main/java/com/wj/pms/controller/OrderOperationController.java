@@ -1,8 +1,17 @@
 package com.wj.pms.controller;
 
+import com.wj.pms.bean.OperationBean;
 import com.wj.pms.common.Result;
+import com.wj.pms.common.exception.BusinessException;
+import com.wj.pms.mybatis.entity.BoxOrdersInfo;
+import com.wj.pms.mybatis.entity.CardOrdersInfo;
+import com.wj.pms.mybatis.entity.OrderInfo;
 import com.wj.pms.mybatis.entity.OrderOperateRecordInfo;
+import com.wj.pms.mybatis.mapper.BoxOrdersInfoMapper;
+import com.wj.pms.mybatis.mapper.CardOrdersInfoMapper;
+import com.wj.pms.mybatis.mapper.OrderInfoMapper;
 import com.wj.pms.service.OrderOperationService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +26,37 @@ public class OrderOperationController {
     @Autowired
     private OrderOperationService orderOperationService;
 
+    @Autowired
+    private OrderInfoMapper orderInfoMapper;
+
+    @Autowired
+    private BoxOrdersInfoMapper boxOrdersInfoMapper;
+
+    @Autowired
+    private CardOrdersInfoMapper cardOrdersInfoMapper;
+
     @GetMapping("/{orderId}/moreOperation")
     @ResponseBody
     public Result moreOperationParentOrder(@PathVariable BigDecimal orderId, HttpSession session){
-        return Result.success(orderOperationService.moreOperationParentOrder(orderId, session));
+        OrderInfo orderInfo = orderInfoMapper.selectByPrimaryKey(orderId);
+        String status = orderInfo.getStatus();
+        return Result.success(orderOperationService.moreOperationOrder(orderId, status, session));
     }
 
     @GetMapping("/{orderId}/moreOperation/{childId}")
     @ResponseBody
     public Result moreOperationChildOrder(@PathVariable BigDecimal orderId,@PathVariable BigDecimal childId, HttpSession session){
-        return Result.success(orderOperationService.moreOperationChildrenOrder(orderId, childId, session));
+        CardOrdersInfo cardOrdersInfo = cardOrdersInfoMapper.selectByPrimaryKey(childId);
+        BoxOrdersInfo boxOrdersInfo = boxOrdersInfoMapper.selectByPrimaryKey(childId);
+        String status;
+        if(boxOrdersInfo != null){
+            status = boxOrdersInfo.getStatus();
+        } else if(cardOrdersInfo != null) {
+            status = cardOrdersInfo.getStatus();
+        } else {
+            throw new BusinessException();
+        }
+        return Result.success(orderOperationService.moreOperationOrder(orderId, status, session));
     }
 
     /**
@@ -34,28 +64,18 @@ public class OrderOperationController {
      {
      "orderid":"2018081916485481851",
      "actionCode":"02",
-     "actionName":"设计图纸"
+     "actionName":"设计图纸",
+     "updateBy":"",
      }
      * @param orderId
-     * @param orderOperateInfo
+     * @param orderOperateRecordInfo
      * @return
      */
-    @PostMapping("/{orderId}/start")
+    @PostMapping("/{orderId}/operation")
     @ResponseBody
-    public Result startOperate(@PathVariable BigDecimal orderId, @RequestBody OrderOperateRecordInfo orderOperateInfo){
-        return Result.success(orderOperationService.startOperate(orderId, orderOperateInfo));
+    public Result startParentOperate(@PathVariable BigDecimal orderId, @RequestBody OrderOperateRecordInfo orderOperateRecordInfo){
+        orderOperateRecordInfo.setOrderId(orderId);
+        return Result.success(orderOperationService.insertOrUpdateOrderOperateRecordInfo(orderOperateRecordInfo));
     }
 
-    /**
-     *
-     * @param orderId
-     * @param orderOperateInfoId
-     * @return
-     */
-    @GetMapping("/{orderId}/end")
-    @ResponseBody
-    public Result endOperate(@PathVariable BigDecimal orderId, @RequestParam BigDecimal orderOperateInfoId){
-        orderOperationService.endOperate(orderId, orderOperateInfoId);
-        return Result.success();
-    }
 }

@@ -18,7 +18,7 @@ public class BusinessException extends BaseException{
         super(enums, data);
     }
 
-    public BusinessException(String code, String message, Object data) {
+    public BusinessException() {
         super(code, message, data);
     }
 
