@@ -1,4 +1,4 @@
-# WJ_PMS
+# WJ_PMS(于2018.10.14转为私有项目开发)
 Wangjing process management system.
 - [开发日记](doc/devDiary.md)
 - [设计图](design)
