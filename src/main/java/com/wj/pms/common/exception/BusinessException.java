@@ -18,10 +18,6 @@ public class BusinessException extends BaseException{
         super(enums, data);
     }
 
-    public BusinessException() {
-        super(code, message, data);
-    }
-
     public BusinessException(String message, String code, String message1, Object data) {
         super(message, code, message1, data);
     }

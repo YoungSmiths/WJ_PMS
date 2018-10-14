@@ -54,7 +54,7 @@ public class OrderOperationController {
         } else if(cardOrdersInfo != null) {
             status = cardOrdersInfo.getStatus();
         } else {
-            throw new BusinessException();
+            throw new BusinessException("","","",null);
         }
         return Result.success(orderOperationService.moreOperationOrder(orderId, status, session));
     }

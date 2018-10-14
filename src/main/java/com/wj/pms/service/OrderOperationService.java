@@ -9,6 +9,7 @@ import com.wj.pms.mybatis.entity.*;
 import com.wj.pms.mybatis.mapper.self.BaseService;
 import com.wj.pms.mybatis.mapper.self.OrderOperationRecordInfoMapperExt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Service("orderOperationService")
 public class OrderOperationService extends BaseService {
 
     @Autowired

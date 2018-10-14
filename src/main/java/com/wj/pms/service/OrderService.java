@@ -1,21 +1,23 @@
 package com.wj.pms.service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.wj.pms.common.BeanUtil;
 import com.wj.pms.common.enums.BusinessResponseCodeEnum;
 import com.wj.pms.common.exception.BaseException;
 import com.wj.pms.common.exception.BusinessException;
 import com.wj.pms.common.exception.ViewException;
 import com.wj.pms.common.util.PrimaryKeyUtil;
-import com.wj.pms.mybatis.entity.*;
+import com.wj.pms.mybatis.entity.BoxOrdersInfo;
+import com.wj.pms.mybatis.entity.CardOrdersInfo;
+import com.wj.pms.mybatis.entity.OrderInfo;
+import com.wj.pms.mybatis.entity.OrdersRelation;
 import com.wj.pms.mybatis.mapper.self.BaseService;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Service("orderService")
 public class OrderService extends BaseService {
     public OrderInfo insertOrUpdate(OrderInfo orders) throws BaseException {
         if (Objects.isNull(orders.getId())) {

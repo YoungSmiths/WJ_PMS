@@ -131,7 +131,7 @@ public class UserService extends BaseService implements UserDetailsService {
         UserInfo userInfo = userInfoMapper.selectByPrimaryKey(id);
         CheckUtil.checkObjNull(userInfo);
         if(!userInfo.getSecret().equals(SecretUtil.encriptSecret(orderSecret))){
-            throw new BusinessException(Constants.EC_ORDER_SECRET_WRONG, "老密码错误", null);
+            throw new BusinessException(Constants.EC_ORDER_SECRET_WRONG, "老密码错误", null,null);
         } else {
             userInfo.setSecret(SecretUtil.encriptSecret(newSecret));
             userInfoMapper.updateByPrimaryKey(userInfo);

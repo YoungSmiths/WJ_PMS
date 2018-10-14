@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script src="../../js/commonCss.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header_left">
+            <img src="../../images/prdLine/title.png">
+        </div>
+        <div class="header_right">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <span id="department" >设计部</span>
+                <span>-</span>
+                <span id="user_code">石洋</span>
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="#">修改密码</a>
+                        <a class="dropdown-item" href="#">退出</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <iframe id="content_frame" src="parentOrderList.html">
+    </iframe>
+
+</div>
+</body>
+<script src="../../js/common.js"></script>
+
+</html>

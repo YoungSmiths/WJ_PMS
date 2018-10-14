@@ -11,6 +11,7 @@ import com.wj.pms.common.exception.BusinessException;
 import com.wj.pms.mybatis.entity.BoxOrdersInfo;
 import com.wj.pms.mybatis.entity.CardOrdersInfo;
 import com.wj.pms.mybatis.entity.OrderInfo;
+import com.wj.pms.mybatis.mapper.OrderInfoMapper;
 import com.wj.pms.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +67,7 @@ public class OrdersController extends BaseController {
      * @param session
      * @return
      */
-    @GetMapping
+    @PostMapping
     @ResponseBody
     public Result selectAll(@RequestBody OrderInfo orderInfo, HttpSession session){
         UserBean user = (UserBean) session.getAttribute("user");
@@ -77,6 +78,16 @@ public class OrdersController extends BaseController {
             if(a.equals(orderInfo.getStatus()))
                 list.addAll(orderService.getOrders4User(orderInfo));
         }
+        return Result.success(list);
+    }
+
+    @Autowired
+    private OrderInfoMapper orderInfoMapper;
+
+    @GetMapping
+    @ResponseBody
+    public Result selectAlla(HttpSession session){
+        List<OrderInfo> list = orderInfoMapper.selectAll();
         return Result.success(list);
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface PmsDao {
 
-    @Select("SELECT * FROM order_info o WHERE o.state = #{state, jdbcType=VARCHAR} and o.order_name = #{orderName, jdbcType=VARCHAR}")
+    @Select("SELECT * FROM order_info o WHERE o.status = #{status, jdbcType=VARCHAR} and o.order_name = #{orderName, jdbcType=VARCHAR}")
     List<OrderInfo> getOrders4User(OrderInfo orderInfo);
 
 }
